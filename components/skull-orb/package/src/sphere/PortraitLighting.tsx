@@ -38,7 +38,7 @@ export function PortraitLightingDefs({ id, silhouette }: { id: string; silhouett
         <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="soft" />
         <feOffset in="soft" dx="-3" dy="-1.5" result="inset" />
         <feComposite in="SourceAlpha" in2="inset" operator="out" result="edge" />
-        <feFlood floodColor="#a995a7" floodOpacity=".22" result="light" />
+        <feFlood floodColor="#8d9cb0" floodOpacity=".22" result="light" />
         <feComposite in="light" in2="edge" operator="in" />
       </filter>
     </>

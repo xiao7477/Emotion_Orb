@@ -1479,7 +1479,7 @@ function te({ id: t, silhouette: e }) {
       /* @__PURE__ */ u("feGaussianBlur", { in: "SourceAlpha", stdDeviation: "3", result: "soft" }),
       /* @__PURE__ */ u("feOffset", { in: "soft", dx: "-3", dy: "-1.5", result: "inset" }),
       /* @__PURE__ */ u("feComposite", { in: "SourceAlpha", in2: "inset", operator: "out", result: "edge" }),
-      /* @__PURE__ */ u("feFlood", { floodColor: "#a995a7", floodOpacity: ".22", result: "light" }),
+      /* @__PURE__ */ u("feFlood", { floodColor: "#8d9cb0", floodOpacity: ".22", result: "light" }),
       /* @__PURE__ */ u("feComposite", { in: "light", in2: "edge", operator: "in" })
     ] })
   ] });
