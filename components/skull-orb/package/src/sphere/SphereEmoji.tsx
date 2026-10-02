@@ -22,6 +22,7 @@ import { skullHandGeometry, skullHeadTransform, type HandFace } from "./hands";
 
 import { skullMaterial, handFill } from "./material";
 import { expressionDuration, expressionMotion } from "./expressionMotion";
+import { PortraitLighting, PortraitLightingDefs } from "./PortraitLighting";
 
 export type SphereAppearance = "sphere" | "skull";
 const portraitSkullPoses = Object.fromEntries(
@@ -134,6 +135,12 @@ export function SphereArtwork({
       style={{ display: "block", overflow: "visible" }}
     >
       <defs>
+        {appearance === "skull" && (
+          <PortraitLightingDefs
+            id={id}
+            silhouette={`${skullHoodGeometry(yaw * radians, pitch * radians)} ${skullPortraitLightning(yaw * radians, pitch * radians)}`}
+          />
+        )}
         <radialGradient id={`${id}-body`} cx="33%" cy="22%" r="79%">
           <stop offset="0" stopColor="#414145" />
           <stop offset=".42" stopColor="#252528" />
@@ -183,9 +190,7 @@ export function SphereArtwork({
             <path
               data-hood=""
               d={skullHoodGeometry(yaw * radians, pitch * radians)}
-              fill="#101012"
-              stroke="#101012"
-              strokeWidth="0.8"
+              fill={shading ? `url(#${id}-hood-material)` : "#101012"}
               opacity={pose.hood}
             />
           )}
@@ -193,11 +198,12 @@ export function SphereArtwork({
             <path
               data-portrait-lightning=""
               d={skullPortraitLightning(yaw * radians, pitch * radians)}
-              fill="#101012"
-              stroke="#101012"
-              strokeWidth="0.8"
+              fill={shading ? `url(#${id}-hood-material)` : "#101012"}
               opacity={pose.hood}
             />
+          )}
+          {appearance === "skull" && (
+            <PortraitLighting id={id} opacity={shading ? pose.hood : 0} />
           )}
           {appearance === "skull" && (
             <g
@@ -397,12 +403,15 @@ export function SphereEmoji({
     const portraitFace = host.querySelector("[data-skull-face]");
     const portraitLightning = host.querySelector("[data-portrait-lightning]");
     const hood = host.querySelector("[data-hood]");
+    const portraitLightShape = host.querySelector("[data-portrait-light-shape]");
+    const portraitLighting = host.querySelector("[data-portrait-lighting]");
     const bodySphere = host.querySelector("[data-body-sphere]");
     const character = host.querySelector("[data-character-motion]");
     const loadingDots = host.querySelector("[data-loading-dots]");
     const dots = Array.from(host.querySelectorAll("[data-loading-dot]"));
     const crashAlert = host.querySelector("[data-crash-alert]");
     const handFaces = Array.from(host.querySelectorAll("[data-hand-face]"));
+    let lastPortraitSilhouette = "";
     lastHands.current = [];
     const step = (
       dt: number,
@@ -525,14 +534,23 @@ export function SphereEmoji({
           "transform",
           skullPortraitFaceTransform(pose.hood),
         );
-        portraitLightning?.setAttribute(
-          "d",
-          skullPortraitLightning(viewYaw, viewPitch),
-        );
+        const hoodPath = skullHoodGeometry(viewYaw, viewPitch);
+        const lightningPath = skullPortraitLightning(viewYaw, viewPitch);
+        const silhouette = `${hoodPath} ${lightningPath}`;
+        // Do not invalidate the three lighting filters during a settled pose.
+        if (silhouette !== lastPortraitSilhouette) {
+          portraitLightning?.setAttribute("d", lightningPath);
+          hood?.setAttribute("d", hoodPath);
+          portraitLightShape?.setAttribute("d", silhouette);
+          lastPortraitSilhouette = silhouette;
+        }
         portraitLightning?.setAttribute("opacity", String(pose.hood));
         elements.crest?.setAttribute("opacity", String(1 - pose.hood));
-        hood?.setAttribute("d", skullHoodGeometry(viewYaw, viewPitch));
         hood?.setAttribute("opacity", String(pose.hood));
+        const hoodFill = props.shading ? `url(#${id}-hood-material)` : "#101012";
+        hood?.setAttribute("fill", hoodFill);
+        portraitLightning?.setAttribute("fill", hoodFill);
+        portraitLighting?.setAttribute("opacity", String(props.shading ? pose.hood : 0));
         bodySphere?.setAttribute("opacity", String(1 - pose.hood));
         loadingDots?.setAttribute("opacity", String(pose.stalled));
         loadingDots?.setAttribute(

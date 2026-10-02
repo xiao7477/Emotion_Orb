@@ -250,6 +250,80 @@ it("头顶闪电在正面与转头时保持单条闭合轮廓", () => {
       expect(d).not.toMatch(/NaN|Infinity/);
     }
 });
+it("角色逆光共用完整剪影，转头后与头罩和闪电同步", () => {
+  act(() => root.render(<SphereEmoji appearance="skull" portrait reducedMotion />));
+  const silhouette = container.querySelector("[data-portrait-light-shape]")!;
+  const light = container.querySelector("[data-portrait-lighting]")!;
+  const combined = () => `${container.querySelector("[data-hood]")!.getAttribute("d")} ${container.querySelector("[data-portrait-lightning]")!.getAttribute("d")}`;
+  expect(silhouette.getAttribute("d")).toBe(combined());
+  expect(light.getAttribute("opacity")).toBe("1");
+  const front = silhouette.getAttribute("d");
+  act(() => root.render(<SphereEmoji appearance="skull" portrait yaw={45} pitch={-20} reducedMotion />));
+  expect(silhouette.getAttribute("d")).not.toBe(front);
+  expect(silhouette.getAttribute("d")).toBe(combined());
+  expect(light.querySelectorAll("use")).toHaveLength(3);
+  expect(light.querySelector("[stroke], image")).toBeNull();
+});
+
+it("关闭材质明暗立即恢复纯黑，圆球形态不残留角色逆光", () => {
+  act(() => root.render(<SphereEmoji appearance="skull" portrait shading reducedMotion />));
+  const hood = container.querySelector("[data-hood]")!;
+  const light = container.querySelector("[data-portrait-lighting]")!;
+  expect(hood.getAttribute("fill")).toContain("hood-material");
+  act(() => root.render(<SphereEmoji appearance="skull" portrait shading={false} reducedMotion />));
+  expect(hood.getAttribute("fill")).toBe("#101012");
+  expect(light.getAttribute("opacity")).toBe("0");
+  act(() => root.render(<SphereEmoji appearance="skull" portrait shading reducedMotion />));
+  expect(light.getAttribute("opacity")).toBe("1");
+  expect(hood.getAttribute("fill")).toContain("hood-material");
+  act(() => root.render(<SphereEmoji appearance="skull" reducedMotion />));
+  expect(light.getAttribute("opacity")).toBe("0");
+});
+
+it("闪电与头罩接合处共用画面材质，不描画内部接缝", () => {
+  for (const yaw of [-65, 0, 65]) {
+    act(() => root.render(<SphereEmoji appearance="skull" portrait yaw={yaw} reducedMotion />));
+    const hood = container.querySelector("[data-hood]")!;
+    const lightning = container.querySelector("[data-portrait-lightning]")!;
+    expect(hood.getAttribute("fill")).toBe(lightning.getAttribute("fill"));
+    for (const shape of [hood, lightning]) {
+      expect(shape.getAttribute("stroke")).toBeNull();
+      expect(shape.getAttribute("stroke-width")).toBeNull();
+    }
+    const materialId = hood.getAttribute("fill")!.slice(5, -1);
+    expect(container.querySelector(`[id="${materialId}"]`)!.getAttribute("gradientUnits")).toBe("userSpaceOnUse");
+  }
+});
+
+it("动态与暂停时逆光几何跟随角色，九种表情保持有限坐标", () => {
+  const silhouette = () => container.querySelector("[data-portrait-light-shape]")!.getAttribute("d");
+  act(() => root.render(<SphereEmoji appearance="skull" portrait />));
+  const front = silhouette();
+  tick(100, { ...emptyPointer, present: true, x: 600, y: 0 });
+  expect(silhouette()).not.toBe(front);
+  act(() => root.render(<SphereEmoji appearance="skull" portrait paused />));
+  const frozen = silhouette();
+  tick(30);
+  expect(silhouette()).toBe(frozen);
+  for (const emotion of skullEmotions) {
+    act(() => root.render(<SphereEmoji appearance="skull" portrait emotion={emotion} yaw={-65} pitch={40} reducedMotion />));
+    expect(silhouette()).not.toMatch(/NaN|Infinity/);
+    expect(container.querySelector("[data-portrait-lighting]")!.getAttribute("opacity")).toBe("1");
+  }
+});
+
+it("多个角色的光照定义互不串用，所有光照均裁在原剪影之内", () => {
+  act(() => root.render(<><SphereEmoji appearance="skull" portrait reducedMotion /><SphereEmoji appearance="skull" portrait reducedMotion /></>));
+  const ids = [...container.querySelectorAll("[id]")].map((el) => el.id);
+  expect(new Set(ids).size).toBe(ids.length);
+  for (const filter of container.querySelectorAll("filter")) {
+    const carve = filter.querySelector('feComposite[operator="out"]')!;
+    expect(carve.getAttribute("in")).toBe("SourceAlpha");
+    expect(filter.lastElementChild!.getAttribute("operator")).toBe("in");
+  }
+  act(() => root.render(<SphereEmoji reducedMotion />));
+  expect(container.querySelector("filter, [data-portrait-lighting]")).toBeNull();
+});
 it("角色造型的九种表情始终保留头罩，并能切换面罩与手势", () => {
   for (const emotion of skullEmotions) {
     act(() =>

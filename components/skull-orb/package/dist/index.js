@@ -1,58 +1,58 @@
-import { jsx as y, jsxs as V } from "react/jsx-runtime";
-import { useId as gt, useRef as N, useEffect as x0 } from "react";
-import { useReducedMotion as bt } from "motion/react";
-function Mt(t, e, r, i, a) {
-  const c = Math.max(1, Math.ceil(r / 0.008333333333333333)), o = r / c;
-  for (let n = 0; n < c; n++)
-    t.velocity += (i * (e - t.value) - a * t.velocity) * o, t.value += t.velocity * o;
+import { jsxs as W, Fragment as k0, jsx as u } from "react/jsx-runtime";
+import { useId as v0, useRef as V, useEffect as At } from "react";
+import { useReducedMotion as w0 } from "motion/react";
+function x0(t, e, n, a, s) {
+  const l = Math.max(1, Math.ceil(n / 0.008333333333333333)), o = n / l;
+  for (let r = 0; r < l; r++)
+    t.velocity += (a * (e - t.value) - s * t.velocity) * o, t.value += t.velocity * o;
   return Number.isFinite(t.value) || (t.value = e, t.velocity = 0), t.value;
 }
-const E0 = {
+const Et = {
   x: 0,
   y: 0,
   speed: 0,
   present: !1,
   pressed: !1,
   stamp: 0
-}, i0 = /* @__PURE__ */ new Set();
-let D = { ...E0 }, U = 0, c0 = 0;
-function D0(t) {
-  U = 0;
-  const e = c0 ? Math.min((t - c0) / 1e3, 0.05) : 1 / 60;
-  c0 = t;
-  for (const r of i0) r(e, t, D);
-  i0.size && !document.hidden && (U = requestAnimationFrame(D0));
+}, lt = /* @__PURE__ */ new Set();
+let K = { ...Et }, tt = 0, ct = 0;
+function t0(t) {
+  tt = 0;
+  const e = ct ? Math.min((t - ct) / 1e3, 0.05) : 1 / 60;
+  ct = t;
+  for (const n of lt) n(e, t, K);
+  lt.size && !document.hidden && (tt = requestAnimationFrame(t0));
 }
-function V0() {
-  !U && !document.hidden && (c0 = 0, U = requestAnimationFrame(D0));
+function e0() {
+  !tt && !document.hidden && (ct = 0, tt = requestAnimationFrame(t0));
 }
-function M0(t) {
+function Mt(t) {
   if (!t.isPrimary) return;
-  const e = performance.now(), r = (e - D.stamp) / 1e3, i = D.present && r > 4e-3 && r < 0.15 ? Math.hypot(t.clientX - D.x, t.clientY - D.y) / r : 0;
-  D = {
+  const e = performance.now(), n = (e - K.stamp) / 1e3, a = K.present && n > 4e-3 && n < 0.15 ? Math.hypot(t.clientX - K.x, t.clientY - K.y) / n : 0;
+  K = {
     x: t.clientX,
     y: t.clientY,
-    speed: Math.min(i, 6e3),
+    speed: Math.min(a, 6e3),
     present: !0,
     pressed: (t.buttons & 1) > 0,
     stamp: e
   };
 }
-function n0() {
-  D = { ...E0 };
+function ot() {
+  K = { ...Et };
 }
-function z0() {
-  D.pressed = !1;
+function _t() {
+  K.pressed = !1;
 }
-function B0() {
-  n0(), document.hidden ? (cancelAnimationFrame(U), U = 0, c0 = 0) : V0();
+function Xt() {
+  ot(), document.hidden ? (cancelAnimationFrame(tt), tt = 0, ct = 0) : e0();
 }
-function yt(t) {
-  return i0.add(t), i0.size === 1 && (window.addEventListener("pointermove", M0, { passive: !0 }), window.addEventListener("pointerdown", M0, { passive: !0 }), window.addEventListener("pointerup", z0, { passive: !0 }), window.addEventListener("pointercancel", n0, { passive: !0 }), window.addEventListener("blur", n0), document.addEventListener("pointerleave", n0), document.addEventListener("visibilitychange", B0)), V0(), () => {
-    i0.delete(t), i0.size || (cancelAnimationFrame(U), U = 0, c0 = 0, D = { ...E0 }, window.removeEventListener("pointermove", M0), window.removeEventListener("pointerdown", M0), window.removeEventListener("pointerup", z0), window.removeEventListener("pointercancel", n0), window.removeEventListener("blur", n0), document.removeEventListener("pointerleave", n0), document.removeEventListener("visibilitychange", B0));
+function S0(t) {
+  return lt.add(t), lt.size === 1 && (window.addEventListener("pointermove", Mt, { passive: !0 }), window.addEventListener("pointerdown", Mt, { passive: !0 }), window.addEventListener("pointerup", _t, { passive: !0 }), window.addEventListener("pointercancel", ot, { passive: !0 }), window.addEventListener("blur", ot), document.addEventListener("pointerleave", ot), document.addEventListener("visibilitychange", Xt)), e0(), () => {
+    lt.delete(t), lt.size || (cancelAnimationFrame(tt), tt = 0, ct = 0, K = { ...Et }, window.removeEventListener("pointermove", Mt), window.removeEventListener("pointerdown", Mt), window.removeEventListener("pointerup", _t), window.removeEventListener("pointercancel", ot), window.removeEventListener("blur", ot), document.removeEventListener("pointerleave", ot), document.removeEventListener("visibilitychange", Xt));
   };
 }
-const vt = {
+const A0 = {
   idle: "平静",
   smile: "微笑",
   laugh: "大笑",
@@ -64,7 +64,7 @@ const vt = {
   stalled: "卡顿",
   crashed: "死机",
   raise: "举手示意"
-}, _ = {
+}, Z = {
   eyeLength: 0,
   eyeBend: 0,
   eyeRadius: 0.13,
@@ -85,15 +85,15 @@ const vt = {
   stalled: 0,
   crashed: 0,
   hood: 0
-}, U0 = {
-  idle: _,
-  raise: _,
-  stalled: _,
-  crashed: _,
-  sad: { ..._, mouthCurve: -0.06 },
-  serious: { ..._, eyeRadius: 0.1, mouthWidth: 0.09 },
+}, o0 = {
+  idle: Z,
+  raise: Z,
+  stalled: Z,
+  crashed: Z,
+  sad: { ...Z, mouthCurve: -0.06 },
+  serious: { ...Z, eyeRadius: 0.1, mouthWidth: 0.09 },
   smile: {
-    ..._,
+    ...Z,
     eyeLength: 0.14,
     eyeBend: -0.07,
     eyeRadius: 0.06,
@@ -101,7 +101,7 @@ const vt = {
     mouthCurve: 0.095
   },
   laugh: {
-    ..._,
+    ...Z,
     eyeLength: 0.145,
     eyeBend: -0.08,
     eyeRadius: 0.06,
@@ -110,7 +110,7 @@ const vt = {
     mouthOpen: 0.18
   },
   surprised: {
-    ..._,
+    ...Z,
     eyeRadius: 0.15,
     leftY: -0.2,
     rightY: -0.2,
@@ -120,7 +120,7 @@ const vt = {
     brow: 1
   },
   curious: {
-    ..._,
+    ...Z,
     rightY: -0.22,
     mouthWidth: 0.1,
     mouthTilt: -0.045,
@@ -128,7 +128,7 @@ const vt = {
     browTilt: -0.085
   },
   thinking: {
-    ..._,
+    ...Z,
     eyeRadius: 0.115,
     leftY: -0.16,
     rightY: -0.19,
@@ -139,115 +139,115 @@ const vt = {
     browTilt: -0.025,
     hand: 1
   }
-}, l0 = 5, kt = 128 * Math.sqrt(l0 * l0 - 1) / l0;
-function wt([t, e], r, i, a = 1) {
-  const c = Math.sqrt(Math.max(1e-4, 1 - t * t - e * e)), o = t * Math.cos(r) + c * Math.sin(r), n = c * Math.cos(r) - t * Math.sin(r);
+}, ht = 5, L0 = 128 * Math.sqrt(ht * ht - 1) / ht;
+function $0([t, e], n, a, s = 1) {
+  const l = Math.sqrt(Math.max(1e-4, 1 - t * t - e * e)), o = t * Math.cos(n) + l * Math.sin(n), r = l * Math.cos(n) - t * Math.sin(n);
   return [
-    o * a,
-    (e * Math.cos(i) + n * Math.sin(i)) * a,
-    (n * Math.cos(i) - e * Math.sin(i)) * a
+    o * s,
+    (e * Math.cos(a) + r * Math.sin(a)) * s,
+    (r * Math.cos(a) - e * Math.sin(a)) * s
   ];
 }
-function y0([t, e, r]) {
-  const i = kt * l0 / (l0 - r);
-  return [160 + t * i, 160 + e * i];
+function kt([t, e, n]) {
+  const a = L0 * ht / (ht - n);
+  return [160 + t * a, 160 + e * a];
 }
-function Lt(t, e, r, i = 1) {
-  const a = t.map((l) => wt(l, e, r, i)), c = [], o = i * i / l0;
-  for (let l = 0; l < a.length; l++) {
-    const s = a[l], u = a[(l + 1) % a.length];
-    if (s[2] >= o && c.push(s), s[2] >= o != u[2] >= o) {
-      const f = (o - s[2]) / (u[2] - s[2]);
-      c.push([s[0] + (u[0] - s[0]) * f, s[1] + (u[1] - s[1]) * f, o]);
+function Y0(t, e, n, a = 1) {
+  const s = t.map((c) => $0(c, e, n, a)), l = [], o = a * a / ht;
+  for (let c = 0; c < s.length; c++) {
+    const i = s[c], d = s[(c + 1) % s.length];
+    if (i[2] >= o && l.push(i), i[2] >= o != d[2] >= o) {
+      const m = (o - i[2]) / (d[2] - i[2]);
+      l.push([i[0] + (d[0] - i[0]) * m, i[1] + (d[1] - i[1]) * m, o]);
     }
   }
-  return c.reduce((l, s, u) => {
-    const f = c[(u + 1) % c.length];
-    return l + s[0] * f[1] - f[0] * s[1];
-  }, 0) < 0 && c.reverse(), c.length ? c.map(
-    (l, s) => `${s ? "L" : "M"}${y0(l).map((u) => u.toFixed(3)).join(" ")}`
+  return l.reduce((c, i, d) => {
+    const m = l[(d + 1) % l.length];
+    return c + i[0] * m[1] - m[0] * i[1];
+  }, 0) < 0 && l.reverse(), l.length ? l.map(
+    (c, i) => `${i ? "L" : "M"}${kt(c).map((d) => d.toFixed(3)).join(" ")}`
   ).join(" ") + "Z" : "";
 }
-function r0(t, e, r, i = r) {
-  return Array.from({ length: 64 }, (a, c) => {
-    const o = c / 64 * Math.PI * 2;
-    return [t + Math.cos(o) * r, e + Math.sin(o) * i];
+function rt(t, e, n, a = n) {
+  return Array.from({ length: 64 }, (s, l) => {
+    const o = l / 64 * Math.PI * 2;
+    return [t + Math.cos(o) * n, e + Math.sin(o) * a];
   });
 }
-function Z(t, e) {
-  const r = t.map((o, n) => {
-    const l = t[Math.max(0, n - 1)], s = t[Math.min(t.length - 1, n + 1)];
-    return Math.atan2(s[1] - l[1], s[0] - l[0]);
-  }), i = (o, n) => [
-    t[o][0] - Math.sin(r[o]) * e * n,
-    t[o][1] + Math.cos(r[o]) * e * n
-  ], a = t.map((o, n) => i(n, 1)), c = t.at(-1);
+function U(t, e) {
+  const n = t.map((o, r) => {
+    const c = t[Math.max(0, r - 1)], i = t[Math.min(t.length - 1, r + 1)];
+    return Math.atan2(i[1] - c[1], i[0] - c[0]);
+  }), a = (o, r) => [
+    t[o][0] - Math.sin(n[o]) * e * r,
+    t[o][1] + Math.cos(n[o]) * e * r
+  ], s = t.map((o, r) => a(r, 1)), l = t.at(-1);
   for (let o = 1; o <= 12; o++) {
-    const n = r.at(-1) + Math.PI / 2 - o * Math.PI / 12;
-    a.push([c[0] + Math.cos(n) * e, c[1] + Math.sin(n) * e]);
+    const r = n.at(-1) + Math.PI / 2 - o * Math.PI / 12;
+    s.push([l[0] + Math.cos(r) * e, l[1] + Math.sin(r) * e]);
   }
-  for (let o = t.length - 1; o >= 0; o--) a.push(i(o, -1));
+  for (let o = t.length - 1; o >= 0; o--) s.push(a(o, -1));
   for (let o = 1; o <= 12; o++) {
-    const n = r[0] - Math.PI / 2 - o * Math.PI / 12;
-    a.push([
-      t[0][0] + Math.cos(n) * e,
-      t[0][1] + Math.sin(n) * e
+    const r = n[0] - Math.PI / 2 - o * Math.PI / 12;
+    s.push([
+      t[0][0] + Math.cos(r) * e,
+      t[0][1] + Math.sin(r) * e
     ]);
   }
-  return a;
+  return s;
 }
-function u0(t, e, r, i, a = 0) {
-  return Array.from({ length: 33 }, (c, o) => {
-    const n = Math.PI / 3, l = (o / 32 * 2 - 1) * n, s = Math.sin(l) / Math.sin(n), u = (Math.cos(l) - Math.cos(n)) / (1 - Math.cos(n));
-    return [t + s * r, e + u * i + s * a];
+function dt(t, e, n, a, s = 0) {
+  return Array.from({ length: 33 }, (l, o) => {
+    const r = Math.PI / 3, c = (o / 32 * 2 - 1) * r, i = Math.sin(c) / Math.sin(r), d = (Math.cos(c) - Math.cos(r)) / (1 - Math.cos(r));
+    return [t + i * n, e + d * a + i * s];
   });
 }
-function xt(t, e = 0, r = 0, i = 1) {
-  const a = (k, b = 1) => Lt(k, e, r, b), c = (k, b) => {
-    const w = Math.sqrt(3), R = t.eyeLength < 1e-3 ? r0(k, b, t.eyeRadius, t.eyeRadius * i) : Z(u0(k, b, t.eyeLength, t.eyeBend), t.eyeRadius);
-    return a(
-      R.map(([W, C]) => [
-        k + (W - k) * w,
-        b + (C - b) * w * (t.eyeLength < 1e-3 ? 1 : i)
+function P0(t, e = 0, n = 0, a = 1) {
+  const s = (k, M = 1) => Y0(k, e, n, M), l = (k, M) => {
+    const w = Math.sqrt(3), F = t.eyeLength < 1e-3 ? rt(k, M, t.eyeRadius, t.eyeRadius * a) : U(dt(k, M, t.eyeLength, t.eyeBend), t.eyeRadius);
+    return s(
+      F.map(([j, q]) => [
+        k + (j - k) * w,
+        M + (q - M) * w * (t.eyeLength < 1e-3 ? 1 : a)
       ])
     );
-  }, o = (k, b) => {
+  }, o = (k, M) => {
     const w = Math.max(0, 1 - t.eyeLength / 0.075);
     if (w < 1e-3) return "";
-    const R = t.eyeRadius * Math.sqrt(3) * 0.32 * w;
-    return a(r0(k, b + t.eyeBend, R, R * i));
-  }, n = u0(0, 0.22, t.mouthWidth, t.mouthCurve, t.mouthTilt), l = n.map(([k, b]) => {
+    const F = t.eyeRadius * Math.sqrt(3) * 0.32 * w;
+    return s(rt(k, M + t.eyeBend, F, F * a));
+  }, r = dt(0, 0.22, t.mouthWidth, t.mouthCurve, t.mouthTilt), c = r.map(([k, M]) => {
     const w = Math.max(-1, Math.min(1, k / t.mouthWidth));
     return [
       k,
-      b + t.mouthOpen * Math.sqrt(Math.max(0, 1 - w * w))
+      M + t.mouthOpen * Math.sqrt(Math.max(0, 1 - w * w))
     ];
-  }).reverse(), s = [...n, ...l], u = s.map((k, b) => {
-    const w = b / (s.length - 1) * Math.PI * 2;
+  }).reverse(), i = [...r, ...c], d = i.map((k, M) => {
+    const w = M / (i.length - 1) * Math.PI * 2;
     return [
       -Math.cos(w) * t.mouthWidth,
       0.25 - Math.sin(w) * (t.mouthOpen * 0.6)
     ];
-  }), f = s.map(
-    ([k, b], w) => [
-      k + (u[w][0] - k) * t.mouthRound,
-      b + (u[w][1] - b) * t.mouthRound
+  }), m = i.map(
+    ([k, M], w) => [
+      k + (d[w][0] - k) * t.mouthRound,
+      M + (d[w][1] - M) * t.mouthRound
     ]
-  ), g = a(f) + a(Z(f.slice(0, 33), 0.044)) + a(Z(f.slice(33), 0.044)), v = (1 - t.hand) * 0.35;
+  ), b = s(m) + s(U(m.slice(0, 33), 0.044)) + s(U(m.slice(33), 0.044)), v = (1 - t.hand) * 0.35;
   return {
-    left: c(-0.39, t.leftY),
-    right: c(0.39, t.rightY),
+    left: l(-0.39, t.leftY),
+    right: l(0.39, t.rightY),
     leftPupil: o(-0.39, t.leftY),
     rightPupil: o(0.39, t.rightY),
-    mouth: g,
-    leftBrow: a(
-      Z(u0(-0.39, -0.54, 0.105, -0.028, t.browTilt), 0.04)
+    mouth: b,
+    leftBrow: s(
+      U(dt(-0.39, -0.54, 0.105, -0.028, t.browTilt), 0.04)
     ),
-    rightBrow: a(
-      Z(u0(0.39, -0.54, 0.105, -0.028, -t.browTilt * 0.3), 0.04)
+    rightBrow: s(
+      U(dt(0.39, -0.54, 0.105, -0.028, -t.browTilt * 0.3), 0.04)
     ),
-    hand: a(r0(0.31, 0.53 + v, 0.115, 0.12), 1.035) + a(
-      Z(
+    hand: s(rt(0.31, 0.53 + v, 0.115, 0.12), 1.035) + s(
+      U(
         [
           [0.28, 0.49 + v],
           [0.24, 0.42 + v],
@@ -257,58 +257,58 @@ function xt(t, e = 0, r = 0, i = 1) {
         0.044
       ),
       1.035
-    ) + a(
-      Z(u0(0.26, 0.5 + v, 0.115, 0.025, -0.012), 0.046),
+    ) + s(
+      U(dt(0.26, 0.5 + v, 0.115, 0.025, -0.012), 0.046),
       1.045
     )
   };
 }
-function s0([t, e, r], i, a) {
-  const c = t * Math.cos(i) + r * Math.sin(i), o = r * Math.cos(i) - t * Math.sin(i);
+function nt([t, e, n], a, s) {
+  const l = t * Math.cos(a) + n * Math.sin(a), o = n * Math.cos(a) - t * Math.sin(a);
   return [
-    c,
-    e * Math.cos(a) + o * Math.sin(a),
-    o * Math.cos(a) - e * Math.sin(a)
+    l,
+    e * Math.cos(s) + o * Math.sin(s),
+    o * Math.cos(s) - e * Math.sin(s)
   ];
 }
-function A0([t, e, r]) {
-  const i = r - 5, a = t * t + e * e + i * i, c = 10 * i, n = c * c - 4 * a * 24;
-  return n <= 0 ? 0.01 : (-c - Math.sqrt(n)) / (2 * a) - 1;
+function Lt([t, e, n]) {
+  const a = n - 5, s = t * t + e * e + a * a, l = 10 * a, r = l * l - 4 * s * 24;
+  return r <= 0 ? 0.01 : (-l - Math.sqrt(r)) / (2 * s) - 1;
 }
-function d0(t, e, r, i = !0) {
-  const a = t.map((o) => s0(o, e, r)), c = [];
-  for (let o = 0; o < a.length; o++) {
-    const n = a[o], l = a[(o + 1) % a.length], s = !i || A0(n) >= -1e-5, u = !i || A0(l) >= -1e-5;
-    if (s && c.push(n), s !== u) {
-      let f = 0, g = 1;
+function ft(t, e, n, a = !0) {
+  const s = t.map((o) => nt(o, e, n)), l = [];
+  for (let o = 0; o < s.length; o++) {
+    const r = s[o], c = s[(o + 1) % s.length], i = !a || Lt(r) >= -1e-5, d = !a || Lt(c) >= -1e-5;
+    if (i && l.push(r), i !== d) {
+      let m = 0, b = 1;
       for (let k = 0; k < 18; k++) {
-        const b = (f + g) / 2, w = [
-          n[0] + (l[0] - n[0]) * b,
-          n[1] + (l[1] - n[1]) * b,
-          n[2] + (l[2] - n[2]) * b
+        const M = (m + b) / 2, w = [
+          r[0] + (c[0] - r[0]) * M,
+          r[1] + (c[1] - r[1]) * M,
+          r[2] + (c[2] - r[2]) * M
         ];
-        A0(w) >= -1e-5 === s ? f = b : g = b;
+        Lt(w) >= -1e-5 === i ? m = M : b = M;
       }
-      const v = (f + g) / 2;
-      c.push([
-        n[0] + (l[0] - n[0]) * v,
-        n[1] + (l[1] - n[1]) * v,
-        n[2] + (l[2] - n[2]) * v
+      const v = (m + b) / 2;
+      l.push([
+        r[0] + (c[0] - r[0]) * v,
+        r[1] + (c[1] - r[1]) * v,
+        r[2] + (c[2] - r[2]) * v
       ]);
     }
   }
-  return c.length >= 3 ? c.map(
-    (o, n) => `${n ? "L" : "M"}${y0(o).map((l) => l.toFixed(3)).join(" ")}`
+  return l.length >= 3 ? l.map(
+    (o, r) => `${r ? "L" : "M"}${kt(o).map((c) => c.toFixed(3)).join(" ")}`
   ).join(" ") + "Z" : "";
 }
-function At(t, e) {
-  const r = Math.min(e, 0.28);
-  return Math.sqrt(Math.max(0.12, 1 - t * t - r * r)) + 0.11 + Math.max(0, e - 0.28) * 0.24;
+function C0(t, e) {
+  const n = Math.min(e, 0.28);
+  return Math.sqrt(Math.max(0.12, 1 - t * t - n * n)) + 0.11 + Math.max(0, e - 0.28) * 0.24;
 }
-function S0([t, e], r = 0) {
-  return [t, e, At(t, e) + r];
+function $t([t, e], n = 0) {
+  return [t, e, C0(t, e) + n];
 }
-const St = [
+const F0 = [
   ["M", 155, 342],
   ["L", 225, 321],
   ["L", 387, 323],
@@ -324,7 +324,7 @@ const St = [
   ["Q", 174, 657, 172, 522],
   ["L", 155, 342],
   ["Z"]
-], Yt = [
+], R0 = [
   ["M", 500, 74],
   ["L", 280, 174],
   ["L", 399, 231],
@@ -335,30 +335,30 @@ const St = [
   ["L", 322, 229],
   ["L", 174, 163],
   ["Z"]
-], Pt = (t, e, r) => {
-  const i = 160 + (t - 305) * 0.54, c = 73 + ((e < 558 ? 558 + (e - 558) * 0.7 : e) - 558) * 0.54, o = 128 * Math.sqrt(24) / 5.2;
+], O0 = (t, e, n) => {
+  const a = 160 + (t - 305) * 0.54, l = 73 + ((e < 558 ? 558 + (e - 558) * 0.7 : e) - 558) * 0.54, o = 128 * Math.sqrt(24) / 5.2;
   return [
-    (i - 160) / o,
-    (c - 160) / o,
-    r
+    (a - 160) / o,
+    (l - 160) / o,
+    n
   ];
 };
-function K0(t, e, r, i) {
-  const a = (c, o) => y0(s0(Pt(c, o, i), e * 0.22, r * 0.16));
-  return t.map((c) => {
-    if (c[0] === "Z") return "Z";
-    const o = c.slice(1), n = [];
-    for (let l = 0; l < o.length; l += 2) {
-      const s = a(o[l], o[l + 1]);
-      n.push(`${s[0].toFixed(3)} ${s[1].toFixed(3)}`);
+function r0(t, e, n, a) {
+  const s = (l, o) => kt(nt(O0(l, o, a), e * 0.22, n * 0.16));
+  return t.map((l) => {
+    if (l[0] === "Z") return "Z";
+    const o = l.slice(1), r = [];
+    for (let c = 0; c < o.length; c += 2) {
+      const i = s(o[c], o[c + 1]);
+      r.push(`${i[0].toFixed(3)} ${i[1].toFixed(3)}`);
     }
-    return c[0] + n.join(" ");
+    return l[0] + r.join(" ");
   }).join(" ");
 }
-const J0 = (t = 0, e = 0) => K0(St, t, e, -0.2), tt = (t = 0, e = 0) => K0(Yt, t, e, -0.2), et = (t) => {
+const Rt = (t = 0, e = 0) => r0(F0, t, e, -0.2), Ot = (t = 0, e = 0) => r0(R0, t, e, -0.2), n0 = (t) => {
   const e = -44 - 86 * t;
   return `-24 ${e.toFixed(3)} 368 ${(380 - e).toFixed(3)}`;
-}, ot = (t) => `translate(160 160) scale(${(1 - 0.25 * t).toFixed(5)}) translate(-160 -160)`, ee = [
+}, s0 = (t) => `translate(160 160) scale(${(1 - 0.25 * t).toFixed(5)}) translate(-160 -160)`, le = [
   "idle",
   "curious",
   "raise",
@@ -369,21 +369,21 @@ const J0 = (t = 0, e = 0) => K0(St, t, e, -0.2), tt = (t = 0, e = 0) => K0(Yt, t
   "stalled",
   "crashed"
 ];
-function F0(t) {
+function jt(t) {
   const e = [[0, -0.79]];
-  for (const [r, i, a] of t) {
-    const c = e.at(-1);
+  for (const [n, a, s] of t) {
+    const l = e.at(-1);
     for (let o = 1; o <= 12; o++) {
-      const n = o / 12, l = 1 - n;
+      const r = o / 12, c = 1 - r;
       e.push([
-        l ** 3 * c[0] + 3 * l * l * n * r[0] + 3 * l * n * n * i[0] + n ** 3 * a[0],
-        l ** 3 * c[1] + 3 * l * l * n * r[1] + 3 * l * n * n * i[1] + n ** 3 * a[1]
+        c ** 3 * l[0] + 3 * c * c * r * n[0] + 3 * c * r * r * a[0] + r ** 3 * s[0],
+        c ** 3 * l[1] + 3 * c * c * r * n[1] + 3 * c * r * r * a[1] + r ** 3 * s[1]
       ]);
     }
   }
   return e;
 }
-const $t = F0([
+const E0 = jt([
   [
     [0.41, -0.79],
     [0.7, -0.49],
@@ -449,7 +449,7 @@ const $t = F0([
     [-0.41, -0.79],
     [0, -0.79]
   ]
-]), Rt = F0([
+]), j0 = jt([
   [
     [0.44, -0.79],
     [0.73, -0.61],
@@ -530,7 +530,7 @@ const $t = F0([
     [-0.44, -0.79],
     [0, -0.79]
   ]
-]), Et = [
+]), W0 = [
   [0, -0.76],
   [0.4, -0.76],
   [0.4, -0.61],
@@ -560,7 +560,7 @@ const $t = F0([
   [-0.61, -0.61],
   [-0.4, -0.61],
   [-0.4, -0.76]
-], T0 = F0([
+], Zt = jt([
   [
     [0.39, -0.79],
     [0.68, -0.49],
@@ -571,8 +571,8 @@ const $t = F0([
     [0.64, 0.25],
     [0.5, 0.3]
   ]
-]), Ft = [
-  ...T0,
+]), q0 = [
+  ...Zt,
   [0.5, 0.51],
   [0.47, 0.56],
   [0.39, 0.56],
@@ -590,26 +590,26 @@ const $t = F0([
   [-0.47, 0.56],
   [-0.5, 0.51],
   [-0.5, 0.3],
-  ...T0.slice(0, -1).reverse().map(([t, e]) => [-t, e])
-], jt = 320, Y0 = [$t, Rt, Et, Ft].map(
-  (t) => v0(t, jt)
+  ...Zt.slice(0, -1).reverse().map(([t, e]) => [-t, e])
+], Q0 = 320, Yt = [E0, j0, W0, q0].map(
+  (t) => vt(t, Q0)
 );
-function Ot(t, e = 0, r = 0) {
-  const i = [
-    Math.max(0, 1 - t - e - r),
+function B0(t, e = 0, n = 0) {
+  const a = [
+    Math.max(0, 1 - t - e - n),
     t,
     e,
-    r
+    n
   ];
-  return Y0[0].map(
-    (a, c) => i.reduce(
-      (o, n, l) => [o[0] + Y0[l][c][0] * n, o[1] + Y0[l][c][1] * n],
+  return Yt[0].map(
+    (s, l) => a.reduce(
+      (o, r, c) => [o[0] + Yt[c][l][0] * r, o[1] + Yt[c][l][1] * r],
       [0, 0]
     )
   );
 }
-const X = {
-  ...U0.idle,
+const D = {
+  ...o0.idle,
   eyeRadius: 0.175,
   leftY: -0.19,
   rightY: -0.19,
@@ -617,12 +617,12 @@ const X = {
   mouthRound: 1,
   mouthOpen: 0.17,
   hand: 0
-}, nt = {
-  idle: X,
-  smile: X,
-  laugh: X,
+}, i0 = {
+  idle: D,
+  smile: D,
+  laugh: D,
   surprised: {
-    ...X,
+    ...D,
     eyeRadius: 0.2,
     leftY: -0.22,
     rightY: -0.22,
@@ -630,7 +630,7 @@ const X = {
     mouthOpen: 0.245
   },
   curious: {
-    ...X,
+    ...D,
     shrug: 1,
     sad: 0.88,
     eyeRadius: 0.195,
@@ -640,14 +640,14 @@ const X = {
     mouthOpen: 0.045
   },
   raise: {
-    ...X,
+    ...D,
     raise: 1,
     eyeRadius: 0.18,
     mouthWidth: 0.075,
     mouthOpen: 0.12
   },
   thinking: {
-    ...X,
+    ...D,
     eyeRadius: 0.155,
     leftY: -0.19,
     rightY: -0.19,
@@ -656,7 +656,7 @@ const X = {
     mouthOpen: 0.11
   },
   sad: {
-    ...X,
+    ...D,
     sad: 1,
     brow: 1,
     eyeRadius: 0.195,
@@ -666,21 +666,21 @@ const X = {
     mouthOpen: 0.155
   },
   stalled: {
-    ...X,
+    ...D,
     stalled: 1,
     leftY: -0.055,
     rightY: -0.055,
     eyeRadius: 0.18
   },
   crashed: {
-    ...X,
+    ...D,
     crashed: 1,
     leftY: -0.035,
     rightY: -0.035,
     eyeRadius: 0.185
   },
   serious: {
-    ...X,
+    ...D,
     serious: 1,
     eyeRadius: 0.195,
     leftY: 0.055,
@@ -688,7 +688,7 @@ const X = {
     mouthWidth: 0.085,
     mouthOpen: 0.16
   }
-}, Wt = [
+}, z0 = [
   [-0.09, -0.93],
   [-0.025, -1.08],
   [-0.15, -1.23],
@@ -701,35 +701,35 @@ const X = {
   [0.105, -1.01],
   [0.065, -0.93]
 ];
-function v0(t, e) {
-  const r = t.map(
-    (a, c) => Math.hypot(
-      a[0] - t[(c + 1) % t.length][0],
-      a[1] - t[(c + 1) % t.length][1]
+function vt(t, e) {
+  const n = t.map(
+    (s, l) => Math.hypot(
+      s[0] - t[(l + 1) % t.length][0],
+      s[1] - t[(l + 1) % t.length][1]
     )
-  ), i = r.reduce((a, c) => a + c, 0);
-  return Array.from({ length: e }, (a, c) => {
-    let o = c / e * i, n = 0;
-    for (; o > r[n] && n < t.length - 1; ) o -= r[n++];
-    const l = o / r[n], s = t[n], u = t[(n + 1) % t.length];
-    return [s[0] + (u[0] - s[0]) * l, s[1] + (u[1] - s[1]) * l];
+  ), a = n.reduce((s, l) => s + l, 0);
+  return Array.from({ length: e }, (s, l) => {
+    let o = l / e * a, r = 0;
+    for (; o > n[r] && r < t.length - 1; ) o -= n[r++];
+    const c = o / n[r], i = t[r], d = t[(r + 1) % t.length];
+    return [i[0] + (d[0] - i[0]) * c, i[1] + (d[1] - i[1]) * c];
   });
 }
-function rt(t, e, r = 64) {
-  const i = [t];
-  for (const [a, c, o] of e) {
-    const n = i.at(-1);
-    for (let l = 1; l <= 14; l++) {
-      const s = l / 14, u = 1 - s;
-      i.push([
-        u ** 3 * n[0] + 3 * u * u * s * a[0] + 3 * u * s * s * c[0] + s ** 3 * o[0],
-        u ** 3 * n[1] + 3 * u * u * s * a[1] + 3 * u * s * s * c[1] + s ** 3 * o[1]
+function a0(t, e, n = 64) {
+  const a = [t];
+  for (const [s, l, o] of e) {
+    const r = a.at(-1);
+    for (let c = 1; c <= 14; c++) {
+      const i = c / 14, d = 1 - i;
+      a.push([
+        d ** 3 * r[0] + 3 * d * d * i * s[0] + 3 * d * i * i * l[0] + i ** 3 * o[0],
+        d ** 3 * r[1] + 3 * d * d * i * s[1] + 3 * d * i * i * l[1] + i ** 3 * o[1]
       ]);
     }
   }
-  return v0(i, r);
+  return vt(a, n);
 }
-const Ct = rt(
+const I0 = a0(
   [0.235, -0.065],
   [
     [
@@ -763,7 +763,7 @@ const Ct = rt(
       [0.235, -0.065]
     ]
   ]
-), I0 = rt(
+), Dt = a0(
   [0.018, 0.14],
   [
     [
@@ -797,7 +797,7 @@ const Ct = rt(
       [0.018, 0.14]
     ]
   ]
-), Qt = v0(
+), T0 = vt(
   [
     [0.185, -0.19],
     [0.185, 0.115],
@@ -807,7 +807,7 @@ const Ct = rt(
     [-0.205, -0.19]
   ],
   64
-), _0 = v0(
+), Ut = vt(
   [
     [0.105, 0.285],
     [0.105, 0.395],
@@ -817,83 +817,83 @@ const Ct = rt(
   ],
   64
 );
-function st(t) {
-  return Array.from({ length: 64 }, (e, r) => {
-    const i = r / 64 * Math.PI * 2, a = [Math.cos(i), Math.sin(i)];
-    let c = 0;
+function l0(t) {
+  return Array.from({ length: 64 }, (e, n) => {
+    const a = n / 64 * Math.PI * 2, s = [Math.cos(a), Math.sin(a)];
+    let l = 0;
     for (let o = 0; o < t.length; o++) {
-      const n = t[o], l = t[(o + 1) % t.length], s = [l[0] - n[0], l[1] - n[1]], u = a[0] * s[1] - a[1] * s[0];
-      if (Math.abs(u) < 1e-8) continue;
-      const f = (n[0] * s[1] - n[1] * s[0]) / u, g = (n[0] * a[1] - n[1] * a[0]) / u;
-      f >= 0 && g >= 0 && g <= 1 && (c = Math.max(c, f));
+      const r = t[o], c = t[(o + 1) % t.length], i = [c[0] - r[0], c[1] - r[1]], d = s[0] * i[1] - s[1] * i[0];
+      if (Math.abs(d) < 1e-8) continue;
+      const m = (r[0] * i[1] - r[1] * i[0]) / d, b = (r[0] * s[1] - r[1] * s[0]) / d;
+      m >= 0 && b >= 0 && b <= 1 && (l = Math.max(l, m));
     }
-    return [a[0] * c, a[1] * c];
+    return [s[0] * l, s[1] * l];
   });
 }
-const X0 = st(Ct), Z0 = st(Qt);
-function qt(t, e, r, i, a = !1) {
-  if (a) return [t, e];
-  const c = Math.max(0, Math.min(1, r.stalled)), o = 0.055, n = i % 2.1, l = n < 0.24 ? [0, 0.023, -0.018, 0][Math.min(3, Math.floor(n / 0.06))] : 0;
+const Nt = l0(I0), Ht = l0(T0);
+function G0(t, e, n, a, s = !1) {
+  if (s) return [t, e];
+  const l = Math.max(0, Math.min(1, n.stalled)), o = 0.055, r = a % 2.1, c = r < 0.24 ? [0, 0.023, -0.018, 0][Math.min(3, Math.floor(r / 0.06))] : 0;
   return [
-    t + (Math.round(t / o) * o - t + l) * c,
-    e + (Math.round(e / o) * o - e) * c
+    t + (Math.round(t / o) * o - t + c) * l,
+    e + (Math.round(e / o) * o - e) * l
   ];
 }
-function zt(t, e = 0, r = 0, i = 1, a = 0, c = 0, o = 0, n = 1, l = 1) {
-  const s = Math.max(0, Math.min(1, t.serious)), u = Math.max(0, Math.min(1, t.sad)), f = Math.max(0, Math.min(1, t.stalled)), g = Math.max(0, Math.min(1, t.crashed)), v = (h, d = 0) => d0(
-    h.map((m) => S0(m, d)),
+function _0(t, e = 0, n = 0, a = 1, s = 0, l = 0, o = 0, r = 1, c = 1) {
+  const i = Math.max(0, Math.min(1, t.serious)), d = Math.max(0, Math.min(1, t.sad)), m = Math.max(0, Math.min(1, t.stalled)), b = Math.max(0, Math.min(1, t.crashed)), v = (h, f = 0) => ft(
+    h.map((p) => $t(p, f)),
     e,
-    r
-  ), k = Ot(s, f, g), b = k.map((h) => S0(h)), w = k.map((h) => S0(h, -0.105));
-  let R = "", W = "";
-  for (let h = 0; h < b.length; h++) {
-    const d = b[h], m = b[(h + 1) % b.length], p = [m[1] - d[1], d[0] - m[0], 0], x = s0(p, e, r), S = s0(d, e, r);
-    if (x[0] * -S[0] + x[1] * -S[1] + x[2] * (5 - S[2]) <= 0)
+    n
+  ), k = B0(i, m, b), M = k.map((h) => $t(h)), w = k.map((h) => $t(h, -0.105));
+  let F = "", j = "";
+  for (let h = 0; h < M.length; h++) {
+    const f = M[h], p = M[(h + 1) % M.length], g = [p[1] - f[1], f[0] - p[0], 0], S = nt(g, e, n), L = nt(f, e, n);
+    if (S[0] * -L[0] + S[1] * -L[1] + S[2] * (5 - L[2]) <= 0)
       continue;
-    const P = d0(
-      [d, m, w[(h + 1) % b.length], w[h]],
+    const Y = ft(
+      [f, p, w[(h + 1) % M.length], w[h]],
       e,
-      r
+      n
     );
-    x[0] * -0.5 + x[1] * -0.7 + x[2] * 0.3 > 0 ? W += P : R += P;
+    S[0] * -0.5 + S[1] * -0.7 + S[2] * 0.3 > 0 ? j += Y : F += Y;
   }
-  const C = (h, d, m, p = 1) => {
-    const x = r0(
+  const q = (h, f, p, g = 1) => {
+    const S = rt(
       0,
       0,
-      t.eyeRadius * p * (1 + m * t.browTilt * 2),
-      t.eyeRadius * p
-    ).map(([S, P], E) => {
-      const O = t.eyeRadius * p, $ = -0.02 - m * S * 0.45 + 0.025 * (1 - (S / O) ** 2), F = P + (Math.max(P, $) - P) * u, q = m === 1 ? E : (32 - E + 64) % 64, a0 = m * X0[q][0], J = X0[q][1], k0 = m * Z0[q][0], m0 = Z0[q][1], w0 = 1 - (1 - i) * (1 - s * 0.8) * (1 - f) * (1 - g);
+      t.eyeRadius * g * (1 + p * t.browTilt * 2),
+      t.eyeRadius * g
+    ).map(([L, Y], R) => {
+      const O = t.eyeRadius * g, P = -0.02 - p * L * 0.45 + 0.025 * (1 - (L / O) ** 2), C = Y + (Math.max(Y, P) - Y) * d, z = p === 1 ? R : (32 - R + 64) % 64, st = p * Nt[z][0], it = Nt[z][1], wt = p * Ht[z][0], pt = Ht[z][1], xt = 1 - (1 - a) * (1 - i * 0.8) * (1 - m) * (1 - b);
       return [
-        h + S + (a0 - S) * s + (k0 - S) * f,
-        d + (F + (J - F) * s + (m0 - F) * f) * w0
+        h + L + (st - L) * i + (wt - L) * m,
+        f + (C + (it - C) * i + (pt - C) * m) * xt
       ];
     });
-    return v(x);
-  }, K = r0(0, 0.22, t.mouthWidth, t.mouthOpen * 0.65).map(
-    ([h, d], m) => [
-      (h + (I0[m][0] - h) * s + (_0[m][0] - h) * f) * (1 - g),
-      0.24 + (d + (I0[m][1] - d) * s + (_0[m][1] - d) * f - 0.24) * (1 - g)
+    return v(S);
+  }, et = rt(0, 0.22, t.mouthWidth, t.mouthOpen * 0.65).map(
+    ([h, f], p) => [
+      (h + (Dt[p][0] - h) * i + (Ut[p][0] - h) * m) * (1 - b),
+      0.24 + (f + (Dt[p][1] - f) * i + (Ut[p][1] - f) * m - 0.24) * (1 - b)
     ]
   );
-  let T = "";
-  if (s > 1e-3)
+  let G = "";
+  if (i > 1e-3)
     for (const h of [-0.3, -0.21, -0.11, 0.11, 0.21, 0.3]) {
-      const d = 0.78 - Math.abs(h) * 0.31;
-      T += v(
-        Z(
+      const f = 0.78 - Math.abs(h) * 0.31;
+      G += v(
+        U(
           [
             [h * 0.82, 0.555 + Math.abs(h) * 0.13],
-            [h, d]
+            [h, f]
           ],
-          0.012 * s
+          0.012 * i
         )
       );
     }
   const Q = (h) => {
-    if (s < 1e-3) return "";
-    const d = [[h * 0.635, -0.44]], m = [
+    if (i < 1e-3) return "";
+    const f = [[h * 0.635, -0.44]], p = [
       [
         [0.59, -0.29],
         [0.55, -0.27],
@@ -910,62 +910,62 @@ function zt(t, e = 0, r = 0, i = 1, a = 0, c = 0, o = 0, n = 1, l = 1) {
         [0.6, 0.17]
       ]
     ];
-    for (const [p, x, S] of m) {
-      const P = d.at(-1);
-      for (let E = 1; E <= 14; E++) {
-        const O = E / 14, $ = 1 - O;
-        d.push([
-          $ ** 3 * P[0] + 3 * $ * $ * O * p[0] * h + 3 * $ * O * O * x[0] * h + O ** 3 * S[0] * h,
-          $ ** 3 * P[1] + 3 * $ * $ * O * p[1] + 3 * $ * O * O * x[1] + O ** 3 * S[1]
+    for (const [g, S, L] of p) {
+      const Y = f.at(-1);
+      for (let R = 1; R <= 14; R++) {
+        const O = R / 14, P = 1 - O;
+        f.push([
+          P ** 3 * Y[0] + 3 * P * P * O * g[0] * h + 3 * P * O * O * S[0] * h + O ** 3 * L[0] * h,
+          P ** 3 * Y[1] + 3 * P * P * O * g[1] + 3 * P * O * O * S[1] + O ** 3 * L[1]
         ]);
       }
     }
-    return v(Z(d, 9e-3 * s));
-  }, z = (h) => {
-    const d = Math.max(0, Math.min(1, t.brow));
-    if (d < 1e-3) return "";
-    const m = h * 0.285;
+    return v(U(f, 9e-3 * i));
+  }, I = (h) => {
+    const f = Math.max(0, Math.min(1, t.brow));
+    if (f < 1e-3) return "";
+    const p = h * 0.285;
     return v(
-      Z(
+      U(
         [
-          [m - h * 0.07, -0.405],
-          [m, -0.425],
-          [m + h * 0.055, -0.39]
+          [p - h * 0.07, -0.405],
+          [p, -0.425],
+          [p + h * 0.055, -0.39]
         ],
-        0.018 * d
+        0.018 * f
       )
     );
   };
   return {
-    crest: f + g > 0.999 ? "" : d0(
-      Wt.map(
-        ([h, d]) => [
-          h * (1 - 0.28 * t.hood) * (1 - f - g),
-          -0.93 - 0.07 * t.hood + (d + 0.93) * (1 - 0.3 * t.hood) * (1 - f - g),
+    crest: m + b > 0.999 ? "" : ft(
+      z0.map(
+        ([h, f]) => [
+          h * (1 - 0.28 * t.hood) * (1 - m - b),
+          -0.93 - 0.07 * t.hood + (f + 0.93) * (1 - 0.3 * t.hood) * (1 - m - b),
           0.09
         ]
       ),
       e,
-      r,
+      n,
       !1
     ),
-    maskEdge: d0(w, e, r),
-    maskSide: R,
-    maskSideLight: W,
-    mask: d0(b, e, r),
-    left: C(-0.285 + a + c, t.leftY, 1, n),
-    right: C(0.285 + a + o, t.rightY, -1, l),
-    leftPupil: g > 1e-3 ? v(r0(-0.285 + a, t.leftY, t.eyeRadius * 0.63 * g)) : "",
-    rightPupil: g > 1e-3 ? v(r0(0.285 + a, t.rightY, t.eyeRadius * 0.63 * g)) : "",
-    mouth: g > 0.999 ? "" : v(K),
+    maskEdge: ft(w, e, n),
+    maskSide: F,
+    maskSideLight: j,
+    mask: ft(M, e, n),
+    left: q(-0.285 + s + l, t.leftY, 1, r),
+    right: q(0.285 + s + o, t.rightY, -1, c),
+    leftPupil: b > 1e-3 ? v(rt(-0.285 + s, t.leftY, t.eyeRadius * 0.63 * b)) : "",
+    rightPupil: b > 1e-3 ? v(rt(0.285 + s, t.rightY, t.eyeRadius * 0.63 * b)) : "",
+    mouth: b > 0.999 ? "" : v(et),
     temple: Q(-1) + Q(1),
-    teeth: T,
-    leftBrow: z(-1),
-    rightBrow: z(1),
+    teeth: G,
+    leftBrow: I(-1),
+    rightBrow: I(1),
     hand: ""
   };
 }
-const B = {
+const T = {
   front: "#f5f5f6",
   highlight: "#ffffff",
   midtone: "#f4f4f5",
@@ -975,134 +975,134 @@ const B = {
   edge: "#96999f",
   crease: "#777d89"
 };
-function at(t, e, r) {
-  return t === "mask" ? r ? `url(#${e}-mask)` : B.front : t;
+function c0(t, e, n) {
+  return t === "mask" ? n ? `url(#${e}-mask)` : T.front : t;
 }
-const Bt = "M 151 441 Q 140 421 132 393 Q 110 323 101 253 L 94 184 Q 94 181 98 179 Q 119 167 141 163 L 140 146 Q 140 143 144 142 Q 170 132 201 129 L 200 115 Q 200 112 204 112 Q 235 107 268 110 Q 271 110 271 114 L 271 125 Q 302 124 329 132 Q 332 133 331 137 L 311 265 L 340 276 Q 344 278 343 282 L 326 420 Q 326 425 321 426 L 155 443 Q 152 443 151 441 Z", Tt = [
+const X0 = "M 151 441 Q 140 421 132 393 Q 110 323 101 253 L 94 184 Q 94 181 98 179 Q 119 167 141 163 L 140 146 Q 140 143 144 142 Q 170 132 201 129 L 200 115 Q 200 112 204 112 Q 235 107 268 110 Q 271 110 271 114 L 271 125 Q 302 124 329 132 Q 332 133 331 137 L 311 265 L 340 276 Q 344 278 343 282 L 326 420 Q 326 425 321 426 L 155 443 Q 152 443 151 441 Z", Z0 = [
   "M141 163 Q148 208 150 250",
   "M201 129 Q207 185 205 241",
   "M271 125 Q269 183 260 241",
   "M311 265 L281 254 Q277 252 275 257 L263 296 Q262 300 267 300 Q285 300 297 307",
   "M297 307 Q262 316 238 347"
 ];
-function it(t) {
+function h0(t) {
   const e = t.match(/[MLQZ]|-?\d+(?:\.\d+)?/g);
-  let r = 0, i = [0, 0];
-  const a = [], c = () => [+e[r++], +e[r++]];
-  for (; r < e.length; ) {
-    const o = e[r++];
+  let n = 0, a = [0, 0];
+  const s = [], l = () => [+e[n++], +e[n++]];
+  for (; n < e.length; ) {
+    const o = e[n++];
     if (o === "M" || o === "L") {
-      const n = c(), l = o === "M" ? 1 : Math.max(
+      const r = l(), c = o === "M" ? 1 : Math.max(
         1,
-        Math.ceil(Math.hypot(n[0] - i[0], n[1] - i[1]) / 10)
-      ), s = i;
-      for (let u = 1; u <= l; u++)
-        a.push([
-          s[0] + (n[0] - s[0]) * u / l,
-          s[1] + (n[1] - s[1]) * u / l
+        Math.ceil(Math.hypot(r[0] - a[0], r[1] - a[1]) / 10)
+      ), i = a;
+      for (let d = 1; d <= c; d++)
+        s.push([
+          i[0] + (r[0] - i[0]) * d / c,
+          i[1] + (r[1] - i[1]) * d / c
         ]);
-      i = n;
+      a = r;
     } else if (o === "Q") {
-      const n = i, l = c(), s = c();
-      for (let u = 1; u <= 10; u++) {
-        const f = u / 10, g = 1 - f;
-        a.push([
-          g * g * n[0] + 2 * g * f * l[0] + f * f * s[0],
-          g * g * n[1] + 2 * g * f * l[1] + f * f * s[1]
+      const r = a, c = l(), i = l();
+      for (let d = 1; d <= 10; d++) {
+        const m = d / 10, b = 1 - m;
+        s.push([
+          b * b * r[0] + 2 * b * m * c[0] + m * m * i[0],
+          b * b * r[1] + 2 * b * m * c[1] + m * m * i[1]
         ]);
       }
-      i = s;
+      a = i;
     }
   }
-  return a.map(([o, n]) => [(o - 230) / 190, (n - 275) / 190]);
+  return s.map(([o, r]) => [(o - 230) / 190, (r - 275) / 190]);
 }
-const G0 = it(Bt), It = Tt.map((t) => Z(it(t), 8e-3)), _t = 5;
-function P0(t, e, r, i, a = "shrug", c = 0) {
-  const o = (a === "raise" ? 0.48 : 0.4) * (0.32 + 0.68 * e), n = -t, l = [-0.242, t * 0.461, t * 0.854], s = [-t * 0.97, -0.115, -0.213], u = [0, -0.88, 0.475];
-  function f([h, d], m) {
-    const p = h * n;
-    if (a === "raise") {
-      const F = s0([p, d, m], t * 0.24, -0.08), q = t * 0.1 + c * 0.24, a0 = Math.cos(q), J = Math.sin(q);
-      return s0(
+const Vt = h0(X0), D0 = Z0.map((t) => U(h0(t), 8e-3)), U0 = 5;
+function Pt(t, e, n, a, s = "shrug", l = 0) {
+  const o = (s === "raise" ? 0.48 : 0.4) * (0.32 + 0.68 * e), r = -t, c = [-0.242, t * 0.461, t * 0.854], i = [-t * 0.97, -0.115, -0.213], d = [0, -0.88, 0.475];
+  function m([h, f], p) {
+    const g = h * r;
+    if (s === "raise") {
+      const C = nt([g, f, p], t * 0.24, -0.08), z = t * 0.1 + l * 0.24, st = Math.cos(z), it = Math.sin(z);
+      return nt(
         [
-          t * 0.91 + o * (F[0] * a0 - F[1] * J),
-          -0.38 - c * 0.035 + (1 - e) * 1.05 + o * (F[0] * J + F[1] * a0),
-          0.96 + o * F[2]
+          t * 0.91 + o * (C[0] * st - C[1] * it),
+          -0.38 - l * 0.035 + (1 - e) * 1.05 + o * (C[0] * it + C[1] * st),
+          0.96 + o * C[2]
         ],
-        r * 0.32,
-        i * 0.32
+        n * 0.32,
+        a * 0.32
       );
     }
-    const x = m + 0.1 * Math.max(0, -d - 0.15) ** 2, S = o * (p * l[0] + d * s[0] + x * u[0]), P = o * (p * l[1] + d * s[1] + x * u[1]), E = -t * c * 0.13, O = Math.cos(E), $ = Math.sin(E);
-    return s0(
+    const S = p + 0.1 * Math.max(0, -f - 0.15) ** 2, L = o * (g * c[0] + f * i[0] + S * d[0]), Y = o * (g * c[1] + f * i[1] + S * d[1]), R = -t * l * 0.13, O = Math.cos(R), P = Math.sin(R);
+    return nt(
       [
-        t * 0.86 + S * O - P * $,
-        0.34 - c * 0.018 + (1 - e) * 0.48 + S * $ + P * O,
-        1.04 + o * (p * l[2] + d * s[2] + x * u[2])
+        t * 0.86 + L * O - Y * P,
+        0.34 - l * 0.018 + (1 - e) * 0.48 + L * P + Y * O,
+        1.04 + o * (g * c[2] + f * i[2] + S * d[2])
       ],
-      r * 0.42,
-      i * 0.42
+      n * 0.42,
+      a * 0.42
     );
   }
-  function g(h) {
+  function b(h) {
     return e < 1e-4 || h.length < 3 ? "" : h.map(
-      (d, m) => `${m ? "L" : "M"}${y0(d).map((p) => p.toFixed(3)).join(" ")}`
+      (f, p) => `${p ? "L" : "M"}${kt(f).map((g) => g.toFixed(3)).join(" ")}`
     ).join(" ") + "Z";
   }
-  const v = G0.map((h) => f(h, 0.1)), k = G0.map((h) => f(h, -0.1));
-  let b = "", w = "";
+  const v = Vt.map((h) => m(h, 0.1)), k = Vt.map((h) => m(h, -0.1));
+  let M = "", w = "";
   for (let h = 0; h < v.length; h++) {
-    const d = (h + 1) % v.length, m = v[h], p = v[d], x = k[d], S = p.map((F, q) => F - m[q]), P = x.map((F, q) => F - m[q]), E = [
-      S[1] * P[2] - S[2] * P[1],
-      S[2] * P[0] - S[0] * P[2],
-      S[0] * P[1] - S[1] * P[0]
-    ].map((F) => -F * n);
-    if (E[0] * -m[0] + E[1] * -m[1] + E[2] * (5 - m[2]) <= 0) continue;
-    const $ = g([m, p, x, k[h]]);
-    -E[0] - 0.8 * E[1] + 0.2 * E[2] > 0 ? w += $ : b += $;
+    const f = (h + 1) % v.length, p = v[h], g = v[f], S = k[f], L = g.map((C, z) => C - p[z]), Y = S.map((C, z) => C - p[z]), R = [
+      L[1] * Y[2] - L[2] * Y[1],
+      L[2] * Y[0] - L[0] * Y[2],
+      L[0] * Y[1] - L[1] * Y[0]
+    ].map((C) => -C * r);
+    if (R[0] * -p[0] + R[1] * -p[1] + R[2] * (5 - p[2]) <= 0) continue;
+    const P = b([p, g, S, k[h]]);
+    -R[0] - 0.8 * R[1] + 0.2 * R[2] > 0 ? w += P : M += P;
   }
-  const R = f([0, 0], 0.1), W = f([1, 0], 0.1).map((h, d) => h - R[d]), C = f([0, 1], 0.1).map((h, d) => h - R[d]), K = [
-    W[1] * C[2] - W[2] * C[1],
-    W[2] * C[0] - W[0] * C[2],
-    W[0] * C[1] - W[1] * C[0]
-  ].map((h) => h * n), T = K[0] * -R[0] + K[1] * -R[1] + K[2] * (5 - R[2]) > 0, Q = v.reduce((h, d) => h + d[2], 0) / v.length, z = (h, d, m) => ({
+  const F = m([0, 0], 0.1), j = m([1, 0], 0.1).map((h, f) => h - F[f]), q = m([0, 1], 0.1).map((h, f) => h - F[f]), et = [
+    j[1] * q[2] - j[2] * q[1],
+    j[2] * q[0] - j[0] * q[2],
+    j[0] * q[1] - j[1] * q[0]
+  ].map((h) => h * r), G = et[0] * -F[0] + et[1] * -F[1] + et[2] * (5 - F[2]) > 0, Q = v.reduce((h, f) => h + f[2], 0) / v.length, I = (h, f, p) => ({
     d: h,
-    fill: d,
-    depth: Q + m * 1e-5,
+    fill: f,
+    depth: Q + p * 1e-5,
     opacity: e,
     stroke: "none"
   });
   return [
-    z(g(k), T ? B.edge : "mask", 0),
-    z(b, B.side, 1),
-    z(w, B.sideLight, 2),
-    z(T ? g(v) : "", "mask", 3),
-    z(
-      (T ? It : []).map((h) => g(h.map((d) => f(d, 0.101)))).join(""),
-      B.crease,
+    I(b(k), G ? T.edge : "mask", 0),
+    I(M, T.side, 1),
+    I(w, T.sideLight, 2),
+    I(G ? b(v) : "", "mask", 3),
+    I(
+      (G ? D0 : []).map((h) => b(h.map((f) => m(f, 0.101)))).join(""),
+      T.crease,
       4
     )
   ];
 }
-const f0 = (t) => Math.max(0, Math.min(1, t)), Xt = 3 * _t, Zt = Array.from({ length: Xt }, () => ({
+const mt = (t) => Math.max(0, Math.min(1, t)), N0 = 3 * U0, H0 = Array.from({ length: N0 }, () => ({
   d: "",
   fill: "mask",
   opacity: 0,
   depth: 0,
   stroke: "none"
 }));
-function ct(t) {
-  const e = f0(t.shrug), r = f0(t.raise), i = 1 - 0.25 * e - 0.18 * r;
-  return `translate(${(160 + 8 * r).toFixed(5)} ${(160 - 20 * e).toFixed(5)}) scale(${i.toFixed(5)}) translate(-160 -160)`;
+function u0(t) {
+  const e = mt(t.shrug), n = mt(t.raise), a = 1 - 0.25 * e - 0.18 * n;
+  return `translate(${(160 + 8 * n).toFixed(5)} ${(160 - 20 * e).toFixed(5)}) scale(${a.toFixed(5)}) translate(-160 -160)`;
 }
-function lt(t, e = 0, r = 0, i = 0, a = 0) {
-  return t.shrug < 1e-4 && t.raise < 1e-4 ? Zt : [
-    ...P0(-1, f0(t.shrug), e, r, "shrug", a),
-    ...P0(1, f0(t.shrug), e, r, "shrug", a),
-    ...P0(-1, f0(t.raise), e, r, "raise", i)
-  ].sort((c, o) => c.depth - o.depth);
+function d0(t, e = 0, n = 0, a = 0, s = 0) {
+  return t.shrug < 1e-4 && t.raise < 1e-4 ? H0 : [
+    ...Pt(-1, mt(t.shrug), e, n, "shrug", s),
+    ...Pt(1, mt(t.shrug), e, n, "shrug", s),
+    ...Pt(-1, mt(t.raise), e, n, "raise", a)
+  ].sort((l, o) => l.depth - o.depth);
 }
-const $0 = {
+const Ct = {
   yaw: 0,
   pitch: 0,
   bob: 0,
@@ -1124,18 +1124,18 @@ const $0 = {
   palmSway: 0,
   wave: 0,
   alert: 0
-}, ht = 2.7, R0 = ht, Gt = (t) => t * t * (3 - 2 * t);
-function Nt(t, e) {
+}, f0 = 2.7, Ft = f0, V0 = (t) => t * t * (3 - 2 * t);
+function K0(t, e) {
   if (e) {
     if (t <= e[0][0]) return e[0][1];
-    for (let r = 1; r < e.length; r++) {
-      const [i, a] = e[r], [c, o] = e[r - 1];
-      if (t <= i) return o + (a - o) * Gt((t - c) / (i - c));
+    for (let n = 1; n < e.length; n++) {
+      const [a, s] = e[n], [l, o] = e[n - 1];
+      if (t <= a) return o + (s - o) * V0((t - l) / (a - l));
     }
     return e.at(-1)[1];
   }
 }
-const Ht = {
+const J0 = {
   idle: {
     bob: [
       [0, 0],
@@ -1436,31 +1436,78 @@ const Ht = {
   smile: {},
   laugh: {}
 };
-function N0(t, e) {
-  if (!Number.isFinite(e) || e >= ht)
-    return t === "raise" ? { ...$0, raiseAmount: 0 } : $0;
-  const r = Ht[t], i = { ...$0 };
-  for (const a of Object.keys(i)) {
-    const c = Nt(Math.max(0, e), r[a]);
-    c !== void 0 && (i[a] = c);
+function Kt(t, e) {
+  if (!Number.isFinite(e) || e >= f0)
+    return t === "raise" ? { ...Ct, raiseAmount: 0 } : Ct;
+  const n = J0[t], a = { ...Ct };
+  for (const s of Object.keys(a)) {
+    const l = K0(Math.max(0, e), n[s]);
+    l !== void 0 && (a[s] = l);
   }
-  return i;
+  return a;
 }
-const Dt = Object.fromEntries(
-  Object.entries(nt).map(([t, e]) => [
+function te({ id: t, silhouette: e }) {
+  return /* @__PURE__ */ W(k0, { children: [
+    /* @__PURE__ */ u("path", { id: `${t}-hood-silhouette`, "data-portrait-light-shape": "", d: e }),
+    /* @__PURE__ */ W("radialGradient", { id: `${t}-hood-material`, gradientUnits: "userSpaceOnUse", cx: "80", cy: "-60", r: "380", children: [
+      /* @__PURE__ */ u("stop", { offset: "0", stopColor: "#24262d" }),
+      /* @__PURE__ */ u("stop", { offset: ".44", stopColor: "#141519" }),
+      /* @__PURE__ */ u("stop", { offset: "1", stopColor: "#0c0c0e" })
+    ] }),
+    /* @__PURE__ */ W("linearGradient", { id: `${t}-key-falloff`, gradientUnits: "userSpaceOnUse", x1: "70", y1: "-100", x2: "250", y2: "315", children: [
+      /* @__PURE__ */ u("stop", { offset: "0", stopColor: "white" }),
+      /* @__PURE__ */ u("stop", { offset: ".42", stopColor: "#d4d4d4" }),
+      /* @__PURE__ */ u("stop", { offset: ".78", stopColor: "#565656" }),
+      /* @__PURE__ */ u("stop", { offset: "1", stopColor: "#181818" })
+    ] }),
+    /* @__PURE__ */ u("mask", { id: `${t}-key-mask`, maskUnits: "userSpaceOnUse", x: "-24", y: "-160", width: "368", height: "570", children: /* @__PURE__ */ u("rect", { x: "-24", y: "-160", width: "368", height: "570", fill: `url(#${t}-key-falloff)` }) }),
+    /* @__PURE__ */ W("filter", { id: `${t}-key-soft`, x: "-10%", y: "-10%", width: "120%", height: "120%", colorInterpolationFilters: "sRGB", children: [
+      /* @__PURE__ */ u("feGaussianBlur", { in: "SourceAlpha", stdDeviation: "4.5", result: "soft" }),
+      /* @__PURE__ */ u("feOffset", { in: "soft", dx: "7", dy: "3", result: "inset" }),
+      /* @__PURE__ */ u("feComposite", { in: "SourceAlpha", in2: "inset", operator: "out", result: "edge" }),
+      /* @__PURE__ */ u("feFlood", { floodColor: "#b3c5dc", floodOpacity: ".64", result: "light" }),
+      /* @__PURE__ */ u("feComposite", { in: "light", in2: "edge", operator: "in" })
+    ] }),
+    /* @__PURE__ */ W("filter", { id: `${t}-key-glint`, x: "-10%", y: "-10%", width: "120%", height: "120%", colorInterpolationFilters: "sRGB", children: [
+      /* @__PURE__ */ u("feGaussianBlur", { in: "SourceAlpha", stdDeviation: ".8", result: "soft" }),
+      /* @__PURE__ */ u("feOffset", { in: "soft", dx: "1.4", dy: ".7", result: "inset" }),
+      /* @__PURE__ */ u("feComposite", { in: "SourceAlpha", in2: "inset", operator: "out", result: "edge" }),
+      /* @__PURE__ */ u("feFlood", { floodColor: "#d8e2ed", floodOpacity: ".3", result: "light" }),
+      /* @__PURE__ */ u("feComposite", { in: "light", in2: "edge", operator: "in" })
+    ] }),
+    /* @__PURE__ */ W("filter", { id: `${t}-bounce-soft`, x: "-10%", y: "-10%", width: "120%", height: "120%", colorInterpolationFilters: "sRGB", children: [
+      /* @__PURE__ */ u("feGaussianBlur", { in: "SourceAlpha", stdDeviation: "3", result: "soft" }),
+      /* @__PURE__ */ u("feOffset", { in: "soft", dx: "-3", dy: "-1.5", result: "inset" }),
+      /* @__PURE__ */ u("feComposite", { in: "SourceAlpha", in2: "inset", operator: "out", result: "edge" }),
+      /* @__PURE__ */ u("feFlood", { floodColor: "#a995a7", floodOpacity: ".22", result: "light" }),
+      /* @__PURE__ */ u("feComposite", { in: "light", in2: "edge", operator: "in" })
+    ] })
+  ] });
+}
+function ee({ id: t, opacity: e }) {
+  return /* @__PURE__ */ W("g", { "data-portrait-lighting": "", opacity: e, pointerEvents: "none", "aria-hidden": "true", children: [
+    /* @__PURE__ */ W("g", { mask: `url(#${t}-key-mask)`, children: [
+      /* @__PURE__ */ u("use", { href: `#${t}-hood-silhouette`, fill: "white", filter: `url(#${t}-key-soft)` }),
+      /* @__PURE__ */ u("use", { href: `#${t}-hood-silhouette`, fill: "white", filter: `url(#${t}-key-glint)` })
+    ] }),
+    /* @__PURE__ */ u("use", { href: `#${t}-hood-silhouette`, fill: "white", filter: `url(#${t}-bounce-soft)` })
+  ] });
+}
+const oe = Object.fromEntries(
+  Object.entries(i0).map(([t, e]) => [
     t,
     { ...e, hood: 1 }
   ])
-), H0 = (t, e = !1) => t === "skull" ? e ? Dt : nt : U0, ut = (t, e, r, i, a, c = 0, o = 0, n = 0, l = 1, s = 1) => a === "skull" ? zt(
+), Jt = (t, e = !1) => t === "skull" ? e ? oe : i0 : o0, m0 = (t, e, n, a, s, l = 0, o = 0, r = 0, c = 1, i = 1) => s === "skull" ? _0(
   t,
   e,
-  r,
-  i,
-  c,
-  o,
   n,
+  a,
   l,
-  s
+  o,
+  r,
+  c,
+  i
 ) : {
   crest: "",
   maskEdge: "",
@@ -1469,165 +1516,169 @@ const Dt = Object.fromEntries(
   mask: "",
   teeth: "",
   temple: "",
-  ...xt(t, e, r, i)
-}, H = Math.PI / 180;
-function Vt({
+  ...P0(t, e, n, a)
+}, B = Math.PI / 180;
+function re({
   pose: t,
   yaw: e = 0,
-  pitch: r = 0,
-  shading: i = !0,
-  id: a = "sphere",
-  decorative: c = !1,
+  pitch: n = 0,
+  shading: a = !0,
+  id: s = "sphere",
+  decorative: l = !1,
   appearance: o = "sphere"
 }) {
-  const n = ut(
+  const r = m0(
     t,
-    e * H,
-    r * H,
+    e * B,
+    n * B,
     1,
     o
-  ), l = o === "skull" ? lt(t, e * H, r * H) : [];
-  return /* @__PURE__ */ V(
+  ), c = o === "skull" ? d0(t, e * B, n * B) : [];
+  return /* @__PURE__ */ W(
     "svg",
     {
       "data-skull-svg": "",
       xmlns: "http://www.w3.org/2000/svg",
-      viewBox: o === "skull" ? et(t.hood) : "0 0 320 320",
+      viewBox: o === "skull" ? n0(t.hood) : "0 0 320 320",
       width: "100%",
       height: "100%",
-      "aria-hidden": c || void 0,
+      "aria-hidden": l || void 0,
       style: { display: "block", overflow: "visible" },
       children: [
-        /* @__PURE__ */ V("defs", { children: [
-          /* @__PURE__ */ V("radialGradient", { id: `${a}-body`, cx: "33%", cy: "22%", r: "79%", children: [
-            /* @__PURE__ */ y("stop", { offset: "0", stopColor: "#414145" }),
-            /* @__PURE__ */ y("stop", { offset: ".42", stopColor: "#252528" }),
-            /* @__PURE__ */ y("stop", { offset: ".8", stopColor: "#131315" }),
-            /* @__PURE__ */ y("stop", { offset: "1", stopColor: "#080809" })
+        /* @__PURE__ */ W("defs", { children: [
+          o === "skull" && /* @__PURE__ */ u(
+            te,
+            {
+              id: s,
+              silhouette: `${Rt(e * B, n * B)} ${Ot(e * B, n * B)}`
+            }
+          ),
+          /* @__PURE__ */ W("radialGradient", { id: `${s}-body`, cx: "33%", cy: "22%", r: "79%", children: [
+            /* @__PURE__ */ u("stop", { offset: "0", stopColor: "#414145" }),
+            /* @__PURE__ */ u("stop", { offset: ".42", stopColor: "#252528" }),
+            /* @__PURE__ */ u("stop", { offset: ".8", stopColor: "#131315" }),
+            /* @__PURE__ */ u("stop", { offset: "1", stopColor: "#080809" })
           ] }),
-          /* @__PURE__ */ V("radialGradient", { id: `${a}-mask`, cx: "30%", cy: "18%", r: "95%", children: [
-            /* @__PURE__ */ y("stop", { offset: "0", stopColor: B.highlight }),
-            /* @__PURE__ */ y("stop", { offset: ".55", stopColor: B.midtone }),
-            /* @__PURE__ */ y("stop", { offset: "1", stopColor: B.shadow })
+          /* @__PURE__ */ W("radialGradient", { id: `${s}-mask`, cx: "30%", cy: "18%", r: "95%", children: [
+            /* @__PURE__ */ u("stop", { offset: "0", stopColor: T.highlight }),
+            /* @__PURE__ */ u("stop", { offset: ".55", stopColor: T.midtone }),
+            /* @__PURE__ */ u("stop", { offset: "1", stopColor: T.shadow })
           ] }),
-          /* @__PURE__ */ y("clipPath", { id: `${a}-clip`, children: /* @__PURE__ */ y("circle", { cx: "160", cy: "160", r: "128" }) }),
-          /* @__PURE__ */ y("clipPath", { id: `${a}-mask-face`, children: /* @__PURE__ */ y("path", { "data-eye-clip": "mask", d: n.mask }) }),
-          /* @__PURE__ */ y("clipPath", { id: `${a}-left-eye`, children: /* @__PURE__ */ y("path", { "data-eye-clip": "left", d: n.left }) }),
-          /* @__PURE__ */ y("clipPath", { id: `${a}-right-eye`, children: /* @__PURE__ */ y("path", { "data-eye-clip": "right", d: n.right }) })
+          /* @__PURE__ */ u("clipPath", { id: `${s}-clip`, children: /* @__PURE__ */ u("circle", { cx: "160", cy: "160", r: "128" }) }),
+          /* @__PURE__ */ u("clipPath", { id: `${s}-mask-face`, children: /* @__PURE__ */ u("path", { "data-eye-clip": "mask", d: r.mask }) }),
+          /* @__PURE__ */ u("clipPath", { id: `${s}-left-eye`, children: /* @__PURE__ */ u("path", { "data-eye-clip": "left", d: r.left }) }),
+          /* @__PURE__ */ u("clipPath", { id: `${s}-right-eye`, children: /* @__PURE__ */ u("path", { "data-eye-clip": "right", d: r.right }) })
         ] }),
-        /* @__PURE__ */ V("g", { "data-character-motion": "", children: [
-          /* @__PURE__ */ V(
+        /* @__PURE__ */ W("g", { "data-character-motion": "", children: [
+          /* @__PURE__ */ W(
             "g",
             {
               "data-skull-head": "",
-              transform: o === "skull" ? ct(t) : void 0,
+              transform: o === "skull" ? u0(t) : void 0,
               children: [
-                /* @__PURE__ */ y(
+                /* @__PURE__ */ u(
                   "path",
                   {
                     "data-part": "crest",
-                    d: n.crest,
+                    d: r.crest,
                     fill: "#151518",
                     opacity: 1 - t.hood
                   }
                 ),
-                /* @__PURE__ */ y(
+                /* @__PURE__ */ u(
                   "circle",
                   {
                     "data-body-sphere": "",
                     cx: "160",
                     cy: "160",
                     r: "128",
-                    fill: i ? `url(#${a}-body)` : "#121214",
+                    fill: a ? `url(#${s}-body)` : "#121214",
                     opacity: o === "skull" ? 1 - t.hood : 1
                   }
                 ),
-                o === "skull" && /* @__PURE__ */ y(
+                o === "skull" && /* @__PURE__ */ u(
                   "path",
                   {
                     "data-hood": "",
-                    d: J0(e * H, r * H),
-                    fill: "#101012",
-                    stroke: "#101012",
-                    strokeWidth: "0.8",
+                    d: Rt(e * B, n * B),
+                    fill: a ? `url(#${s}-hood-material)` : "#101012",
                     opacity: t.hood
                   }
                 ),
-                o === "skull" && /* @__PURE__ */ y(
+                o === "skull" && /* @__PURE__ */ u(
                   "path",
                   {
                     "data-portrait-lightning": "",
-                    d: tt(e * H, r * H),
-                    fill: "#101012",
-                    stroke: "#101012",
-                    strokeWidth: "0.8",
+                    d: Ot(e * B, n * B),
+                    fill: a ? `url(#${s}-hood-material)` : "#101012",
                     opacity: t.hood
                   }
                 ),
-                o === "skull" && /* @__PURE__ */ y(
+                o === "skull" && /* @__PURE__ */ u(ee, { id: s, opacity: a ? t.hood : 0 }),
+                o === "skull" && /* @__PURE__ */ u(
                   "g",
                   {
                     "data-loading-dots": "",
                     opacity: t.stalled,
                     transform: `translate(0 ${-6 * t.hood})`,
-                    children: [139, 160, 181].map((s, u) => /* @__PURE__ */ y(
+                    children: [139, 160, 181].map((i, d) => /* @__PURE__ */ u(
                       "circle",
                       {
                         "data-loading-dot": "",
-                        cx: s,
-                        cy: u === 1 ? 13 : 28,
+                        cx: i,
+                        cy: d === 1 ? 13 : 28,
                         r: "7.5",
                         fill: t.hood > 0.5 ? "#fff" : "#202024",
-                        opacity: [0.35, 0.7, 1][u]
+                        opacity: [0.35, 0.7, 1][d]
                       },
-                      s
+                      i
                     ))
                   }
                 ),
-                /* @__PURE__ */ V(
+                /* @__PURE__ */ W(
                   "g",
                   {
                     "data-skull-face": "",
-                    transform: o === "skull" ? ot(t.hood) : void 0,
+                    transform: o === "skull" ? s0(t.hood) : void 0,
                     children: [
-                      /* @__PURE__ */ y(
+                      /* @__PURE__ */ u(
                         "g",
                         {
                           fill: "#fff",
-                          clipPath: o === "skull" ? void 0 : `url(#${a}-clip)`,
-                          children: Object.keys(n).filter((s) => s !== "hand" && s !== "crest").map((s) => /* @__PURE__ */ y(
+                          clipPath: o === "skull" ? void 0 : `url(#${s}-clip)`,
+                          children: Object.keys(r).filter((i) => i !== "hand" && i !== "crest").map((i) => /* @__PURE__ */ u(
                             "path",
                             {
-                              "data-part": s,
-                              d: n[s],
-                              fill: s === "maskSide" ? B.side : s === "maskSideLight" ? B.sideLight : s === "maskEdge" ? B.edge : s === "mask" ? i ? `url(#${a}-mask)` : B.front : s.endsWith("Pupil") && o === "skull" ? "#4b4752" : o === "skull" ? "#101012" : s.endsWith("Pupil") ? "#111113" : void 0,
-                              clipPath: o === "skull" && !s.startsWith("mask") ? `url(#${a}-mask-face)` : s.endsWith("Pupil") ? `url(#${a}-${s === "leftPupil" ? "left" : "right"}-eye)` : void 0,
-                              opacity: s.endsWith("Brow") ? t.brow : 1
+                              "data-part": i,
+                              d: r[i],
+                              fill: i === "maskSide" ? T.side : i === "maskSideLight" ? T.sideLight : i === "maskEdge" ? T.edge : i === "mask" ? a ? `url(#${s}-mask)` : T.front : i.endsWith("Pupil") && o === "skull" ? "#4b4752" : o === "skull" ? "#101012" : i.endsWith("Pupil") ? "#111113" : void 0,
+                              clipPath: o === "skull" && !i.startsWith("mask") ? `url(#${s}-mask-face)` : i.endsWith("Pupil") ? `url(#${s}-${i === "leftPupil" ? "left" : "right"}-eye)` : void 0,
+                              opacity: i.endsWith("Brow") ? t.brow : 1
                             },
-                            s
+                            i
                           ))
                         }
                       ),
-                      /* @__PURE__ */ y(
+                      /* @__PURE__ */ u(
                         "path",
                         {
                           fill: "#fff",
                           "data-part": "hand",
-                          d: n.hand,
+                          d: r.hand,
                           opacity: t.hand
                         }
                       )
                     ]
                   }
                 ),
-                o === "skull" && /* @__PURE__ */ V(
+                o === "skull" && /* @__PURE__ */ W(
                   "g",
                   {
                     "data-crash-alert": "",
                     opacity: "0",
                     transform: "translate(260 52) scale(.3) translate(-260 -52)",
                     children: [
-                      /* @__PURE__ */ y(
+                      /* @__PURE__ */ u(
                         "path",
                         {
                           d: "M260 16 L259 47",
@@ -1637,30 +1688,30 @@ function Vt({
                           strokeLinecap: "round"
                         }
                       ),
-                      /* @__PURE__ */ y("circle", { cx: "259", cy: "67", r: "7", fill: "#e5484d" })
+                      /* @__PURE__ */ u("circle", { cx: "259", cy: "67", r: "7", fill: "#e5484d" })
                     ]
                   }
                 )
               ]
             }
           ),
-          /* @__PURE__ */ y(
+          /* @__PURE__ */ u(
             "g",
             {
               "data-skull-hands": "",
               stroke: "#565861",
               strokeWidth: "0.8",
               strokeLinejoin: "round",
-              children: l.map((s, u) => /* @__PURE__ */ y(
+              children: c.map((i, d) => /* @__PURE__ */ u(
                 "path",
                 {
                   "data-hand-face": "",
-                  d: s.d,
-                  fill: at(s.fill, a, i),
-                  stroke: s.stroke ?? "#565861",
-                  opacity: s.opacity
+                  d: i.d,
+                  fill: c0(i.fill, s, a),
+                  stroke: i.stroke ?? "#565861",
+                  opacity: i.opacity
                 },
-                u
+                d
               ))
             }
           )
@@ -1669,214 +1720,218 @@ function Vt({
     }
   );
 }
-function Ut({
+function ne({
   emotion: t = "idle",
   appearance: e = "sphere",
-  portrait: r = !1,
-  size: i = 256,
-  followPointer: a = !0,
-  reducedMotion: c,
+  portrait: n = !1,
+  size: a = 256,
+  followPointer: s = !0,
+  reducedMotion: l,
   paused: o = !1,
-  playKey: n = 0,
-  shading: l = !0,
-  yaw: s,
-  pitch: u,
-  decorative: f = !1,
-  className: g,
+  playKey: r = 0,
+  shading: c = !0,
+  yaw: i,
+  pitch: d,
+  decorative: m = !1,
+  className: b,
   style: v
 }) {
-  const k = "sphere-" + gt().replace(/[^a-zA-Z0-9]/g, ""), b = bt(), w = c ?? !!b, R = N(null), W = N({
-    pose: { ...H0(e, r)[t] },
-    yaw: s ?? 0,
-    pitch: u ?? 0
-  }), C = N({
+  const k = "sphere-" + v0().replace(/[^a-zA-Z0-9]/g, ""), M = w0(), w = l ?? !!M, F = V(null), j = V({
+    pose: { ...Jt(e, n)[t] },
+    yaw: i ?? 0,
+    pitch: d ?? 0
+  }), q = V({
     emotion: t,
-    followPointer: a,
+    followPointer: s,
     paused: o,
-    yaw: s,
-    pitch: u,
+    yaw: i,
+    pitch: d,
     appearance: e,
-    portrait: r,
-    shading: l,
-    playKey: n
+    portrait: n,
+    shading: c,
+    playKey: r
   });
-  C.current = {
+  q.current = {
     emotion: t,
-    followPointer: a,
+    followPointer: s,
     paused: o,
-    yaw: s,
-    pitch: u,
+    yaw: i,
+    pitch: d,
     appearance: e,
-    portrait: r,
-    shading: l,
-    playKey: n
+    portrait: n,
+    shading: c,
+    playKey: r
   };
-  const K = N({}), T = N(0), Q = N({
+  const et = V({}), G = V(0), Q = V({
     emotion: t,
     appearance: e,
-    playKey: n,
-    elapsed: R0
-  }), z = N(() => {
-  }), h = N(!0), d = N({}), m = N([]);
-  return x0(() => {
-    if (!R.current || typeof IntersectionObserver > "u") return;
-    const p = new IntersectionObserver(([x]) => {
-      h.current = x.isIntersecting;
+    playKey: r,
+    elapsed: Ft
+  }), I = V(() => {
+  }), h = V(!0), f = V({}), p = V([]);
+  return At(() => {
+    if (!F.current || typeof IntersectionObserver > "u") return;
+    const g = new IntersectionObserver(([S]) => {
+      h.current = S.isIntersecting;
     });
-    return p.observe(R.current), () => p.disconnect();
-  }, []), x0(() => {
-    const p = R.current;
-    if (!p) return;
-    const x = Object.fromEntries(
-      Array.from(p.querySelectorAll("[data-part]")).map(
-        (I) => [I.dataset.part, I]
+    return g.observe(F.current), () => g.disconnect();
+  }, []), At(() => {
+    const g = F.current;
+    if (!g) return;
+    const S = Object.fromEntries(
+      Array.from(g.querySelectorAll("[data-part]")).map(
+        (_) => [_.dataset.part, _]
       )
-    ), S = Object.fromEntries(
-      Array.from(p.querySelectorAll("[data-eye-clip]")).map(
-        (I) => [I.dataset.eyeClip, I]
+    ), L = Object.fromEntries(
+      Array.from(g.querySelectorAll("[data-eye-clip]")).map(
+        (_) => [_.dataset.eyeClip, _]
       )
-    ), P = p.querySelector("[data-skull-head]"), E = p.querySelector("[data-skull-svg]"), O = p.querySelector("[data-skull-face]"), $ = p.querySelector("[data-portrait-lightning]"), F = p.querySelector("[data-hood]"), q = p.querySelector("[data-body-sphere]"), a0 = p.querySelector("[data-character-motion]"), J = p.querySelector("[data-loading-dots]"), k0 = Array.from(p.querySelectorAll("[data-loading-dot]")), m0 = p.querySelector("[data-crash-alert]"), w0 = Array.from(p.querySelectorAll("[data-hand-face]"));
-    m.current = [];
-    const j0 = (I, p0, G = !1) => {
-      const M = C.current;
-      if (!G && (M.paused || !h.current)) return;
-      (Q.current.emotion !== M.emotion || Q.current.appearance !== M.appearance || Q.current.playKey !== M.playKey) && (Q.current = {
-        emotion: M.emotion,
-        appearance: M.appearance,
-        playKey: M.playKey,
+    ), Y = g.querySelector("[data-skull-head]"), R = g.querySelector("[data-skull-svg]"), O = g.querySelector("[data-skull-face]"), P = g.querySelector("[data-portrait-lightning]"), C = g.querySelector("[data-hood]"), z = g.querySelector("[data-portrait-light-shape]"), st = g.querySelector("[data-portrait-lighting]"), it = g.querySelector("[data-body-sphere]"), wt = g.querySelector("[data-character-motion]"), pt = g.querySelector("[data-loading-dots]"), xt = Array.from(g.querySelectorAll("[data-loading-dot]")), Wt = g.querySelector("[data-crash-alert]"), p0 = Array.from(g.querySelectorAll("[data-hand-face]"));
+    let qt = "";
+    p.current = [];
+    const Qt = (_, gt, N = !1) => {
+      const y = q.current;
+      if (!N && (y.paused || !h.current)) return;
+      (Q.current.emotion !== y.emotion || Q.current.appearance !== y.appearance || Q.current.playKey !== y.playKey) && (Q.current = {
+        emotion: y.emotion,
+        appearance: y.appearance,
+        playKey: y.playKey,
         elapsed: 0
-      }), G || (Q.current.elapsed = Math.min(
-        R0,
-        Q.current.elapsed + I
+      }), N || (Q.current.elapsed = Math.min(
+        Ft,
+        Q.current.elapsed + _
       ));
-      const L0 = (L, j, t0, e0 = 145) => {
-        const o0 = K.current[L] ??= { value: t0, velocity: 0 };
-        return G ? (o0.value = j, o0.velocity = 0, j) : Mt(o0, j, I, e0, 24);
-      }, A = {
-        ...H0(M.appearance, M.portrait)[M.emotion]
+      const St = (A, E, J, H = 145) => {
+        const X = et.current[A] ??= { value: J, velocity: 0 };
+        return N ? (X.value = E, X.velocity = 0, E) : x0(X, E, _, H, 24);
+      }, x = {
+        ...Jt(y.appearance, y.portrait)[y.emotion]
       };
-      for (const L of Object.keys(A))
-        A[L] = L0(L, A[L], W.current.pose[L]);
-      const Y = M.appearance === "skull" && !G ? N0(M.emotion, Q.current.elapsed) : N0("idle", R0);
-      M.appearance === "skull" && (A.eyeRadius *= Y.eyeScale, A.leftY += Y.gazeY + Y.leftY, A.rightY += Y.gazeY + Y.rightY, A.mouthOpen *= Y.mouthScale, A.shrug *= Y.handAmount, A.raise *= Y.raiseAmount);
-      let O0 = M.yaw ?? 0, W0 = M.pitch ?? 0;
-      if (M.followPointer && p0?.present) {
-        const L = p.getBoundingClientRect(), j = M.appearance === "skull" && M.emotion === "thinking" ? Math.min(1, Math.max(0, (Q.current.elapsed - 2.15) / 0.55)) : 1;
-        M.yaw === void 0 && (O0 = Math.tanh(
-          (p0.x - L.left - L.width / 2) / Math.max(180, L.width)
-        ) * (M.portrait ? 50 : 32) * j), M.pitch === void 0 && (W0 = Math.tanh(
-          (p0.y - L.top - L.height / 2) / Math.max(200, L.height)
-        ) * (M.portrait ? 34 : 23) * j);
+      for (const A of Object.keys(x))
+        x[A] = St(A, x[A], j.current.pose[A]);
+      const $ = y.appearance === "skull" && !N ? Kt(y.emotion, Q.current.elapsed) : Kt("idle", Ft);
+      y.appearance === "skull" && (x.eyeRadius *= $.eyeScale, x.leftY += $.gazeY + $.leftY, x.rightY += $.gazeY + $.rightY, x.mouthOpen *= $.mouthScale, x.shrug *= $.handAmount, x.raise *= $.raiseAmount);
+      let Bt = y.yaw ?? 0, zt = y.pitch ?? 0;
+      if (y.followPointer && gt?.present) {
+        const A = g.getBoundingClientRect(), E = y.appearance === "skull" && y.emotion === "thinking" ? Math.min(1, Math.max(0, (Q.current.elapsed - 2.15) / 0.55)) : 1;
+        y.yaw === void 0 && (Bt = Math.tanh(
+          (gt.x - A.left - A.width / 2) / Math.max(180, A.width)
+        ) * (y.portrait ? 50 : 32) * E), y.pitch === void 0 && (zt = Math.tanh(
+          (gt.y - A.top - A.height / 2) / Math.max(200, A.height)
+        ) * (y.portrait ? 34 : 23) * E);
       }
-      const C0 = (L0("yaw", O0, W.current.yaw, 100) + Y.yaw) * H, Q0 = (L0("pitch", W0, W.current.pitch, 100) + Y.pitch) * H;
-      T.current += I;
-      const dt = T.current % 4.7, ft = G ? 1 : Math.min(
-        Y.blink,
-        1 - 0.92 * Math.exp(-Math.pow((dt - 4.35) / 0.07, 2))
-      ), [g0, b0] = M.appearance === "skull" ? qt(
-        C0,
-        Q0,
-        A,
+      const It = (St("yaw", Bt, j.current.yaw, 100) + $.yaw) * B, Tt = (St("pitch", zt, j.current.pitch, 100) + $.pitch) * B;
+      G.current += _;
+      const g0 = G.current % 4.7, b0 = N ? 1 : Math.min(
+        $.blink,
+        1 - 0.92 * Math.exp(-Math.pow((g0 - 4.35) / 0.07, 2))
+      ), [bt, yt] = y.appearance === "skull" ? G0(
+        It,
+        Tt,
+        x,
         Q.current.elapsed,
-        G || !M.followPointer
-      ) : [C0, Q0], h0 = ut(
-        A,
-        g0,
+        N || !y.followPointer
+      ) : [It, Tt], ut = m0(
+        x,
+        bt,
+        yt,
         b0,
-        ft,
-        M.appearance,
-        Y.gazeX,
-        Y.leftX,
-        Y.rightX,
-        Y.leftEye,
-        Y.rightEye
+        y.appearance,
+        $.gazeX,
+        $.leftX,
+        $.rightX,
+        $.leftEye,
+        $.rightEye
       );
-      M.appearance === "skull" && (E?.setAttribute("viewBox", et(A.hood)), O?.setAttribute(
-        "transform",
-        ot(A.hood)
-      ), $?.setAttribute(
-        "d",
-        tt(g0, b0)
-      ), $?.setAttribute("opacity", String(A.hood)), x.crest?.setAttribute("opacity", String(1 - A.hood)), F?.setAttribute("d", J0(g0, b0)), F?.setAttribute("opacity", String(A.hood)), q?.setAttribute("opacity", String(1 - A.hood)), J?.setAttribute("opacity", String(A.stalled)), J?.setAttribute(
-        "transform",
-        `translate(0 ${(-6 * A.hood).toFixed(3)})`
-      ), k0.forEach((L, j) => {
-        const t0 = G ? [0, 0.5, 1][j] : (1 + Math.sin(T.current * 8 - j * Math.PI * 2 / 3)) / 2;
-        L.setAttribute("cy", String([28, 13, 28][j] - t0 * 5)), L.setAttribute("opacity", String(0.3 + t0 * 0.7)), L.setAttribute("fill", A.hood > 0.5 ? "#fff" : "#202024");
-      }), m0?.setAttribute(
-        "opacity",
-        String(A.crashed * Y.alert)
-      ), m0?.setAttribute(
-        "transform",
-        `translate(260 ${52 + 8 * (1 - Y.alert)}) scale(${(0.3 + 0.7 * Y.alert).toFixed(4)}) translate(-260 -52)`
-      ));
-      const mt = M.appearance === "skull" && !G && M.emotion !== "crashed" ? Math.sin(T.current * 1.5) * 1.2 : 0, pt = Y.bob + mt;
-      a0?.setAttribute(
-        "transform",
-        M.appearance === "skull" ? `translate(160 160) translate(0 ${pt.toFixed(3)}) rotate(${Y.roll.toFixed(3)}) scale(${(1 + Y.scale).toFixed(5)}) translate(-160 -160)` : ""
-      );
-      for (const L of Object.keys(h0))
-        h0[L] !== d.current[L] && (x[L]?.setAttribute("d", h0[L]), S[L]?.setAttribute("d", h0[L]));
-      if (d.current = h0, P?.setAttribute(
-        "transform",
-        M.appearance === "skull" ? ct(A) : ""
-      ), M.appearance === "skull") {
-        const L = lt(
-          A,
-          g0,
-          b0,
-          Y.wave,
-          Y.palmSway
+      if (y.appearance === "skull") {
+        R?.setAttribute("viewBox", n0(x.hood)), O?.setAttribute(
+          "transform",
+          s0(x.hood)
         );
-        L.forEach((j, t0) => {
-          const e0 = w0[t0], o0 = m.current[t0];
-          j.d !== o0?.d && e0?.setAttribute("d", j.d);
-          const q0 = at(j.fill, k, M.shading);
-          e0?.getAttribute("fill") !== q0 && e0?.setAttribute("fill", q0), j.stroke !== o0?.stroke && e0?.setAttribute("stroke", j.stroke ?? "#565861"), j.opacity !== o0?.opacity && e0?.setAttribute("opacity", String(j.opacity));
-        }), m.current = L;
+        const A = Rt(bt, yt), E = Ot(bt, yt), J = `${A} ${E}`;
+        J !== qt && (P?.setAttribute("d", E), C?.setAttribute("d", A), z?.setAttribute("d", J), qt = J), P?.setAttribute("opacity", String(x.hood)), S.crest?.setAttribute("opacity", String(1 - x.hood)), C?.setAttribute("opacity", String(x.hood));
+        const H = y.shading ? `url(#${k}-hood-material)` : "#101012";
+        C?.setAttribute("fill", H), P?.setAttribute("fill", H), st?.setAttribute("opacity", String(y.shading ? x.hood : 0)), it?.setAttribute("opacity", String(1 - x.hood)), pt?.setAttribute("opacity", String(x.stalled)), pt?.setAttribute(
+          "transform",
+          `translate(0 ${(-6 * x.hood).toFixed(3)})`
+        ), xt.forEach((X, at) => {
+          const Gt = N ? [0, 0.5, 1][at] : (1 + Math.sin(G.current * 8 - at * Math.PI * 2 / 3)) / 2;
+          X.setAttribute("cy", String([28, 13, 28][at] - Gt * 5)), X.setAttribute("opacity", String(0.3 + Gt * 0.7)), X.setAttribute("fill", x.hood > 0.5 ? "#fff" : "#202024");
+        }), Wt?.setAttribute(
+          "opacity",
+          String(x.crashed * $.alert)
+        ), Wt?.setAttribute(
+          "transform",
+          `translate(260 ${52 + 8 * (1 - $.alert)}) scale(${(0.3 + 0.7 * $.alert).toFixed(4)}) translate(-260 -52)`
+        );
       }
-      x.leftBrow?.setAttribute("opacity", String(A.brow)), x.rightBrow?.setAttribute("opacity", String(A.brow)), x.hand?.setAttribute("opacity", String(A.hand));
+      const y0 = y.appearance === "skull" && !N && y.emotion !== "crashed" ? Math.sin(G.current * 1.5) * 1.2 : 0, M0 = $.bob + y0;
+      wt?.setAttribute(
+        "transform",
+        y.appearance === "skull" ? `translate(160 160) translate(0 ${M0.toFixed(3)}) rotate(${$.roll.toFixed(3)}) scale(${(1 + $.scale).toFixed(5)}) translate(-160 -160)` : ""
+      );
+      for (const A of Object.keys(ut))
+        ut[A] !== f.current[A] && (S[A]?.setAttribute("d", ut[A]), L[A]?.setAttribute("d", ut[A]));
+      if (f.current = ut, Y?.setAttribute(
+        "transform",
+        y.appearance === "skull" ? u0(x) : ""
+      ), y.appearance === "skull") {
+        const A = d0(
+          x,
+          bt,
+          yt,
+          $.wave,
+          $.palmSway
+        );
+        A.forEach((E, J) => {
+          const H = p0[J], X = p.current[J];
+          E.d !== X?.d && H?.setAttribute("d", E.d);
+          const at = c0(E.fill, k, y.shading);
+          H?.getAttribute("fill") !== at && H?.setAttribute("fill", at), E.stroke !== X?.stroke && H?.setAttribute("stroke", E.stroke ?? "#565861"), E.opacity !== X?.opacity && H?.setAttribute("opacity", String(E.opacity));
+        }), p.current = A;
+      }
+      S.leftBrow?.setAttribute("opacity", String(x.brow)), S.rightBrow?.setAttribute("opacity", String(x.brow)), S.hand?.setAttribute("opacity", String(x.hand));
     };
-    if (z.current = () => j0(0, void 0, !0), w) {
-      z.current();
+    if (I.current = () => Qt(0, void 0, !0), w) {
+      I.current();
       return;
     }
-    return yt((I, p0, G) => j0(I, G));
-  }, [w, e, r]), x0(() => {
-    w && z.current();
-  }, [w, t, s, u, e, r, l, n]), /* @__PURE__ */ y(
+    return S0((_, gt, N) => Qt(_, N));
+  }, [w, e, n]), At(() => {
+    w && I.current();
+  }, [w, t, i, d, e, n, c, r]), /* @__PURE__ */ u(
     "span",
     {
-      ref: R,
-      className: g,
+      ref: F,
+      className: b,
       "data-sphere-emoji": "",
       "data-appearance": e,
-      role: f ? void 0 : "img",
-      "aria-hidden": f || void 0,
-      "aria-label": f ? void 0 : `${e === "skull" && t === "curious" ? "无语摊手" : vt[t]}表情`,
+      role: m ? void 0 : "img",
+      "aria-hidden": m || void 0,
+      "aria-label": m ? void 0 : `${e === "skull" && t === "curious" ? "无语摊手" : A0[t]}表情`,
       style: {
         display: "inline-block",
-        width: i,
-        height: i,
+        width: a,
+        height: a,
         flexShrink: 0,
         ...v
       },
-      children: /* @__PURE__ */ y(
-        Vt,
+      children: /* @__PURE__ */ u(
+        re,
         {
-          ...W.current,
+          ...j.current,
           id: k,
           appearance: e,
-          shading: l,
+          shading: c,
           decorative: !0
         }
       )
     }
   );
 }
-function oe({ form: t = "orb", ...e }) {
-  return /* @__PURE__ */ y(
-    Ut,
+function ce({ form: t = "orb", ...e }) {
+  return /* @__PURE__ */ u(
+    ne,
     {
       ...e,
       appearance: "skull",
@@ -1885,6 +1940,6 @@ function oe({ form: t = "orb", ...e }) {
   );
 }
 export {
-  oe as SkullOrb,
-  ee as skullEmotions
+  ce as SkullOrb,
+  le as skullEmotions
 };
