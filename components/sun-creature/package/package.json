@@ -1,0 +1,31 @@
+{
+  "name": "@emotion-orb/sun-creature",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./style.css": "./dist/sun-creature.css"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": ["**/*.css"],
+  "scripts": {
+    "build": "vite build --config vite.config.ts && tsc -p tsconfig.build.json"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "dependencies": {
+    "motion": "^12.23.0"
+  }
+}

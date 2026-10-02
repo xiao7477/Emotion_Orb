@@ -1,0 +1,24 @@
+import { type FacePose, type Point, type SphereEmotion } from "./geometry";
+export declare const skullEmotions: readonly ["idle", "curious", "raise", "thinking", "surprised", "sad", "serious", "stalled", "crashed"];
+export declare function skullOutlineFor(serious: number, stalled?: number, crashed?: number): Point[];
+export declare const skullOutline: Point[];
+export { skullHoodGeometry } from "./portrait";
+export declare const skullPoses: Record<SphereEmotion, FacePose>;
+export declare function skullViewAngles(yaw: number, pitch: number, pose: FacePose, time: number, still?: boolean): Point;
+export declare function skullGeometry(p: FacePose, yaw?: number, pitch?: number, blink?: number, gazeX?: number, leftX?: number, rightX?: number, leftScale?: number, rightScale?: number): {
+    crest: string;
+    maskEdge: string;
+    maskSide: string;
+    maskSideLight: string;
+    mask: string;
+    left: string;
+    right: string;
+    leftPupil: string;
+    rightPupil: string;
+    mouth: string;
+    temple: string;
+    teeth: string;
+    leftBrow: string;
+    rightBrow: string;
+    hand: string;
+};
