@@ -1450,9 +1450,9 @@ function te({ id: t, silhouette: e }) {
   return /* @__PURE__ */ W(k0, { children: [
     /* @__PURE__ */ u("path", { id: `${t}-hood-silhouette`, "data-portrait-light-shape": "", d: e }),
     /* @__PURE__ */ W("radialGradient", { id: `${t}-hood-material`, gradientUnits: "userSpaceOnUse", cx: "80", cy: "-60", r: "380", children: [
-      /* @__PURE__ */ u("stop", { offset: "0", stopColor: "#24262d" }),
-      /* @__PURE__ */ u("stop", { offset: ".44", stopColor: "#141519" }),
-      /* @__PURE__ */ u("stop", { offset: "1", stopColor: "#0c0c0e" })
+      /* @__PURE__ */ u("stop", { offset: "0", stopColor: "#1c1c1c" }),
+      /* @__PURE__ */ u("stop", { offset: ".44", stopColor: "#121212" }),
+      /* @__PURE__ */ u("stop", { offset: "1", stopColor: "#0b0b0b" })
     ] }),
     /* @__PURE__ */ W("linearGradient", { id: `${t}-key-falloff`, gradientUnits: "userSpaceOnUse", x1: "70", y1: "-100", x2: "250", y2: "315", children: [
       /* @__PURE__ */ u("stop", { offset: "0", stopColor: "white" }),
@@ -1465,21 +1465,21 @@ function te({ id: t, silhouette: e }) {
       /* @__PURE__ */ u("feGaussianBlur", { in: "SourceAlpha", stdDeviation: "4.5", result: "soft" }),
       /* @__PURE__ */ u("feOffset", { in: "soft", dx: "7", dy: "3", result: "inset" }),
       /* @__PURE__ */ u("feComposite", { in: "SourceAlpha", in2: "inset", operator: "out", result: "edge" }),
-      /* @__PURE__ */ u("feFlood", { floodColor: "#b3c5dc", floodOpacity: ".64", result: "light" }),
+      /* @__PURE__ */ u("feFlood", { floodColor: "#bcbcbc", floodOpacity: ".24", result: "light" }),
       /* @__PURE__ */ u("feComposite", { in: "light", in2: "edge", operator: "in" })
     ] }),
     /* @__PURE__ */ W("filter", { id: `${t}-key-glint`, x: "-10%", y: "-10%", width: "120%", height: "120%", colorInterpolationFilters: "sRGB", children: [
       /* @__PURE__ */ u("feGaussianBlur", { in: "SourceAlpha", stdDeviation: ".8", result: "soft" }),
       /* @__PURE__ */ u("feOffset", { in: "soft", dx: "1.4", dy: ".7", result: "inset" }),
       /* @__PURE__ */ u("feComposite", { in: "SourceAlpha", in2: "inset", operator: "out", result: "edge" }),
-      /* @__PURE__ */ u("feFlood", { floodColor: "#d8e2ed", floodOpacity: ".3", result: "light" }),
+      /* @__PURE__ */ u("feFlood", { floodColor: "#e5e5e5", floodOpacity: ".1", result: "light" }),
       /* @__PURE__ */ u("feComposite", { in: "light", in2: "edge", operator: "in" })
     ] }),
     /* @__PURE__ */ W("filter", { id: `${t}-bounce-soft`, x: "-10%", y: "-10%", width: "120%", height: "120%", colorInterpolationFilters: "sRGB", children: [
       /* @__PURE__ */ u("feGaussianBlur", { in: "SourceAlpha", stdDeviation: "3", result: "soft" }),
       /* @__PURE__ */ u("feOffset", { in: "soft", dx: "-3", dy: "-1.5", result: "inset" }),
       /* @__PURE__ */ u("feComposite", { in: "SourceAlpha", in2: "inset", operator: "out", result: "edge" }),
-      /* @__PURE__ */ u("feFlood", { floodColor: "#8d9cb0", floodOpacity: ".22", result: "light" }),
+      /* @__PURE__ */ u("feFlood", { floodColor: "#999999", floodOpacity: ".07", result: "light" }),
       /* @__PURE__ */ u("feComposite", { in: "light", in2: "edge", operator: "in" })
     ] })
   ] });

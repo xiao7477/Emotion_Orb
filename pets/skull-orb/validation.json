@@ -1,0 +1,116 @@
+{
+  "artifact": "spritesheet.png",
+  "sha256": "7981a329b1d76facd5edf0119ab1be9445b92a34e69a907f9d9b19f907970554",
+  "validated_utc_date": "2026-10-03",
+  "dimensions": [
+    1536,
+    2288
+  ],
+  "cell_dimensions": [
+    192,
+    208
+  ],
+  "frames_per_row": [
+    6,
+    8,
+    8,
+    4,
+    5,
+    8,
+    6,
+    6,
+    6,
+    8,
+    8
+  ],
+  "used_frames": 73,
+  "structural_validation": {
+    "ok": true,
+    "errors": [],
+    "warnings": [],
+    "transparent_rgb_residue_pixels": 0
+  },
+  "pets_preflight": {
+    "valid": true,
+    "errors": [],
+    "encoded_bytes": 1969730
+  },
+  "quality_summary": {
+    "ok": true,
+    "errors": [],
+    "warnings": [
+      "337.5->000 diff is a local outlier (2645 pixels vs neighbor average 1342)"
+    ],
+    "jump": {
+      "idle_baseline": 199,
+      "jump_baselines": [
+        200,
+        200,
+        166,
+        196,
+        202
+      ],
+      "airborne_lift_pixels": 36,
+      "landing_delta_pixels": 3
+    },
+    "look_registration": {
+      "neutral_center_x": 96.0,
+      "look_centers_x": [
+        96.0,
+        95.5,
+        96.0,
+        96.0,
+        95.5,
+        96.0,
+        96.0,
+        95.5,
+        95.5,
+        95.5,
+        96.0,
+        96.0,
+        96.5,
+        96.5,
+        96.5,
+        96.5
+      ],
+      "look_widths": [
+        132,
+        131,
+        130,
+        130,
+        129,
+        130,
+        130,
+        129,
+        133,
+        135,
+        134,
+        134,
+        133,
+        133,
+        133,
+        133
+      ],
+      "maximum_center_drift_pixels": 0.5,
+      "maximum_width_ratio": 1.0465116279069768
+    }
+  },
+  "provenance": {
+    "artwork": "Image-generated character artwork, transparently extracted and registered into the approved atlas.",
+    "registered_rows": "Lossless full-width row crops of this exact final atlas; no redraw or per-frame recentering.",
+    "canonical_design": "Accepted reference design; not a replacement runtime frame.",
+    "procedural_component_generates_atlas": false
+  },
+  "visual_review": {
+    "status": "pass",
+    "blocking_findings": 0,
+    "known_variations": [
+      "First jump crouch is approximately 9–12 pixels deeper than the previous design; lift and landing remain coherent.",
+      "Small texture and 3–4 pixel directional silhouette-width differences remain."
+    ],
+    "direction_axis_checks": {
+      "ok": true,
+      "passed_classifications": 28
+    }
+  }
+}

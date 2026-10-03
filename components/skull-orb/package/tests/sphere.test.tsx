@@ -265,13 +265,15 @@ it("角色逆光共用完整剪影，转头后与头罩和闪电同步", () => {
   expect(light.querySelector("[stroke], image")).toBeNull();
 });
 
-it("角色的主光、高光与弱反射光都使用冷色，并保留原有强度", () => {
+it("角色使用微弱中性灰白高光，黑色材质不带冷暖色偏", () => {
   act(() => root.render(<SphereEmoji appearance="skull" portrait reducedMotion />));
   const lights = [...container.querySelectorAll("feFlood")];
   expect(lights.map((light) => light.getAttribute("flood-color"))).toEqual([
-    "#b3c5dc", "#d8e2ed", "#8d9cb0",
+    "#bcbcbc", "#e5e5e5", "#999999",
   ]);
-  expect(lights.map((light) => light.getAttribute("flood-opacity"))).toEqual([".64", ".3", ".22"]);
+  expect(lights.map((light) => light.getAttribute("flood-opacity"))).toEqual([".24", ".1", ".07"]);
+  const bodyStops = [...container.querySelectorAll('[id$="-hood-material"] stop')];
+  expect(bodyStops.map((stop) => stop.getAttribute("stop-color"))).toEqual(["#1c1c1c", "#121212", "#0b0b0b"]);
 });
 
 it("关闭材质明暗立即恢复纯黑，圆球形态不残留角色逆光", () => {

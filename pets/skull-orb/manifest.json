@@ -1,0 +1,207 @@
+{
+  "name": "Skull Orb",
+  "asset_revision": "faint-neutral-final",
+  "sprite_version": 2,
+  "atlas": {
+    "file": "spritesheet.png",
+    "sha256": "7981a329b1d76facd5edf0119ab1be9445b92a34e69a907f9d9b19f907970554",
+    "columns": 8,
+    "rows": 11,
+    "cell_width": 192,
+    "cell_height": 208,
+    "width": 1536,
+    "height": 2288,
+    "mode": "RGBA"
+  },
+  "direction_coordinates": "screen, clockwise from up",
+  "timing_note": "Preview timing in milliseconds; the host may schedule states independently.",
+  "animations": [
+    {
+      "state": "idle",
+      "row": 0,
+      "frames": 6,
+      "frame_durations_ms": [
+        280,
+        110,
+        110,
+        140,
+        140,
+        320
+      ]
+    },
+    {
+      "state": "running-right",
+      "row": 1,
+      "frames": 8,
+      "frame_durations_ms": [
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        220
+      ]
+    },
+    {
+      "state": "running-left",
+      "row": 2,
+      "frames": 8,
+      "frame_durations_ms": [
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        220
+      ]
+    },
+    {
+      "state": "waving",
+      "row": 3,
+      "frames": 4,
+      "frame_durations_ms": [
+        140,
+        140,
+        140,
+        280
+      ]
+    },
+    {
+      "state": "jumping",
+      "row": 4,
+      "frames": 5,
+      "frame_durations_ms": [
+        140,
+        140,
+        140,
+        140,
+        280
+      ]
+    },
+    {
+      "state": "failed",
+      "row": 5,
+      "frames": 8,
+      "frame_durations_ms": [
+        140,
+        140,
+        140,
+        140,
+        140,
+        140,
+        140,
+        240
+      ]
+    },
+    {
+      "state": "waiting",
+      "row": 6,
+      "frames": 6,
+      "frame_durations_ms": [
+        150,
+        150,
+        150,
+        150,
+        150,
+        260
+      ]
+    },
+    {
+      "state": "running",
+      "row": 7,
+      "frames": 6,
+      "frame_durations_ms": [
+        120,
+        120,
+        120,
+        120,
+        120,
+        220
+      ]
+    },
+    {
+      "state": "review",
+      "row": 8,
+      "frames": 6,
+      "frame_durations_ms": [
+        150,
+        150,
+        150,
+        150,
+        150,
+        280
+      ]
+    },
+    {
+      "state": "look-row-9",
+      "row": 9,
+      "frames": 8,
+      "frame_durations_ms": [
+        180,
+        180,
+        180,
+        180,
+        180,
+        180,
+        180,
+        180
+      ],
+      "directions_degrees": [
+        0.0,
+        22.5,
+        45.0,
+        67.5,
+        90.0,
+        112.5,
+        135.0,
+        157.5
+      ]
+    },
+    {
+      "state": "look-row-10",
+      "row": 10,
+      "frames": 8,
+      "frame_durations_ms": [
+        180,
+        180,
+        180,
+        180,
+        180,
+        180,
+        180,
+        180
+      ],
+      "directions_degrees": [
+        180.0,
+        202.5,
+        225.0,
+        247.5,
+        270.0,
+        292.5,
+        315.0,
+        337.5
+      ]
+    }
+  ],
+  "files_sha256": {
+    "preview.png": "91f5bfc8855e1a98d2078ef812cc47b46d230718fe15e068931e8e9589cd86f8",
+    "previews/all-states.mp4": "0fea78bf39fdb11e7bd30d4028fae32365a60e99eb3b157f70685374b83aa819",
+    "source/canonical-design.png": "7df74d2cc6d169067bf939cd536bb7ec21949c61554eadaaeab828a3abdc4468",
+    "source/registered-rows/failed.png": "1f44237d620cb99a0cda3d0791b5f03a75e0b4afdae6f5d0374aeed3bb24cf27",
+    "source/registered-rows/idle.png": "3f7abd361e6fbea3bc20cd6f3f5b89ff5dcf13989ee733cf8d48c78f9fcedcef",
+    "source/registered-rows/jumping.png": "d9ea1058759c13015b84853e80daaf948f6e24dce762e6ece126f9f828433ed2",
+    "source/registered-rows/look-row-10.png": "565931c98ff7ac073c7e66c6e5081eef3912683b72bca5c9d9f5fa6530329a97",
+    "source/registered-rows/look-row-9.png": "57f8c3f16e8aca735a2216b335ae79363a8bbddb87a7a921ed952bb3d9c67a9b",
+    "source/registered-rows/review.png": "f729ea55f2cc15a69c23dc54229acd39df27b066991cbf0c55f53be1be9d556a",
+    "source/registered-rows/running-left.png": "d99168058e076ca7a772433643c37ca497525fa8051c94b4ba0c26b0e80c4f02",
+    "source/registered-rows/running-right.png": "c4299e0294b82c2a7c579af48d924a2052e4d1d7d0ffabcddc26d56a9ca081f9",
+    "source/registered-rows/running.png": "2971d926c5da77fe4680428536b6b60c577a42ac775c415a611ebe71ced3f01c",
+    "source/registered-rows/waiting.png": "25f329f0c07b86d4bbdea7c203daae53891e6cac948cc7d466eacc19332c329b",
+    "source/registered-rows/waving.png": "89762c27c2866e264c787f08a70cbaa68b010802dbb47d04e7d1f8311c1157bf",
+    "spritesheet.png": "7981a329b1d76facd5edf0119ab1be9445b92a34e69a907f9d9b19f907970554"
+  }
+}

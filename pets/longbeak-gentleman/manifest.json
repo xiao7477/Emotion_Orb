@@ -1,0 +1,208 @@
+{
+  "name": "长嘴礼帽先生",
+  "asset_revision": "side-only-compact-final",
+  "sprite_version": 2,
+  "atlas": {
+    "file": "spritesheet.png",
+    "sha256": "25f1ef9f6cb10fd0b9df02bfc880ce9dbbad8514770b7b3425b490336feb4837",
+    "columns": 8,
+    "rows": 11,
+    "cell_width": 192,
+    "cell_height": 208,
+    "width": 1536,
+    "height": 2288,
+    "mode": "RGBA"
+  },
+  "direction_coordinates": "screen, clockwise from up",
+  "timing_note": "Preview timing in milliseconds; the host may schedule states independently.",
+  "animations": [
+    {
+      "state": "idle",
+      "row": 0,
+      "frames": 6,
+      "frame_durations_ms": [
+        280,
+        110,
+        110,
+        140,
+        140,
+        320
+      ]
+    },
+    {
+      "state": "running-right",
+      "row": 1,
+      "frames": 8,
+      "frame_durations_ms": [
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        220
+      ]
+    },
+    {
+      "state": "running-left",
+      "row": 2,
+      "frames": 8,
+      "frame_durations_ms": [
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        220
+      ]
+    },
+    {
+      "state": "waving",
+      "row": 3,
+      "frames": 4,
+      "frame_durations_ms": [
+        140,
+        140,
+        140,
+        280
+      ]
+    },
+    {
+      "state": "jumping",
+      "row": 4,
+      "frames": 5,
+      "frame_durations_ms": [
+        140,
+        140,
+        140,
+        140,
+        280
+      ]
+    },
+    {
+      "state": "failed",
+      "row": 5,
+      "frames": 8,
+      "frame_durations_ms": [
+        140,
+        140,
+        140,
+        140,
+        140,
+        140,
+        140,
+        240
+      ]
+    },
+    {
+      "state": "waiting",
+      "row": 6,
+      "frames": 6,
+      "frame_durations_ms": [
+        150,
+        150,
+        150,
+        150,
+        150,
+        260
+      ]
+    },
+    {
+      "state": "running",
+      "row": 7,
+      "frames": 6,
+      "frame_durations_ms": [
+        120,
+        120,
+        120,
+        120,
+        120,
+        220
+      ]
+    },
+    {
+      "state": "review",
+      "row": 8,
+      "frames": 6,
+      "frame_durations_ms": [
+        150,
+        150,
+        150,
+        150,
+        150,
+        280
+      ]
+    },
+    {
+      "state": "look-row-9",
+      "row": 9,
+      "frames": 8,
+      "frame_durations_ms": [
+        220,
+        220,
+        220,
+        220,
+        220,
+        220,
+        220,
+        220
+      ],
+      "directions_degrees": [
+        0.0,
+        22.5,
+        45.0,
+        67.5,
+        90.0,
+        112.5,
+        135.0,
+        157.5
+      ]
+    },
+    {
+      "state": "look-row-10",
+      "row": 10,
+      "frames": 8,
+      "frame_durations_ms": [
+        220,
+        220,
+        220,
+        220,
+        220,
+        220,
+        220,
+        220
+      ],
+      "directions_degrees": [
+        180.0,
+        202.5,
+        225.0,
+        247.5,
+        270.0,
+        292.5,
+        315.0,
+        337.5
+      ]
+    }
+  ],
+  "files_sha256": {
+    "preview.png": "1c0bdc4468cbddd952cfbfb952e4e565da72bb1d6cea4fd90d77833b75e4a28a",
+    "previews/all-states.mp4": "7f849dc35709a10f996297ab37f73713c6f1edabcc935f50723bb335434722ed",
+    "previews/look-loop.mp4": "800dc98c374592bd3d67177ec9a286f65a63f2914adf5d59898053ef3147f159",
+    "source/canonical-design.png": "d700ad7ed3be835451a6fe3fdf225a48839eee1314f9863dc5787f4b089f4f16",
+    "source/registered-rows/failed.png": "81701c03d7de3fcab734931671231acdfc5daac082bb0489d5f445c64a0e9d84",
+    "source/registered-rows/idle.png": "0b00c180770eb8881ceede564516829de38551fa40265a957151878a807851ac",
+    "source/registered-rows/jumping.png": "65e5fd0628856e9469e4b457e6e469e5aa77e8f7c82883e50cdfb18d45935ff0",
+    "source/registered-rows/look-row-10.png": "88d9fb28ab30938c73d9ff01d072d01d84336ad5bc4d33c19450e17feb1a9af6",
+    "source/registered-rows/look-row-9.png": "f5ddda50793d4ff9ae3d1d7386cb58368eef0f39b14472d3ff8d28c880e544e9",
+    "source/registered-rows/review.png": "f578185ca4911e6ae23a2065bc1a8e7b8225d63d87a67cfbe3a002d51d32a65c",
+    "source/registered-rows/running-left.png": "b5e34cf3cd5bd382a130509b0b0c7ea22f2b65f007fb93df9d879961f3e6f94e",
+    "source/registered-rows/running-right.png": "0944df9194537e635cc911d83e278e6a441f794f5a639ad3818e9449c8225369",
+    "source/registered-rows/running.png": "5893cf87e06020fdf57aa86b8cf663e272e0a2f25652aa962137f6a5af265020",
+    "source/registered-rows/waiting.png": "5b23281665e8110eaed993a733047d3565e8feb7ed7613c9cd3147fe86f763b4",
+    "source/registered-rows/waving.png": "d573df61aa6b03cf76aaffdde47b0055121aec0f6c2c334c5548bde81a38e9f1",
+    "spritesheet.png": "25f1ef9f6cb10fd0b9df02bfc880ce9dbbad8514770b7b3425b490336feb4837"
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "artifact": "spritesheet.png",
+  "sha256": "25f1ef9f6cb10fd0b9df02bfc880ce9dbbad8514770b7b3425b490336feb4837",
+  "validated_utc_date": "2026-10-03",
+  "dimensions": [
+    1536,
+    2288
+  ],
+  "cell_dimensions": [
+    192,
+    208
+  ],
+  "frames_per_row": [
+    6,
+    8,
+    8,
+    4,
+    5,
+    8,
+    6,
+    6,
+    6,
+    8,
+    8
+  ],
+  "used_frames": 73,
+  "structural_validation": {
+    "ok": true,
+    "errors": [],
+    "warnings": [],
+    "transparent_rgb_residue_pixels": 0
+  },
+  "pets_preflight": {
+    "valid": true,
+    "errors": [],
+    "encoded_bytes": 1759040
+  },
+  "quality_summary": {
+    "ok": true,
+    "errors": [],
+    "warnings": [
+      "look direction 022.5 accepted with a reviewed warning",
+      "look direction 045 accepted with a reviewed warning",
+      "look direction 067.5 accepted with a reviewed warning",
+      "look direction 225 accepted with a reviewed warning",
+      "look direction 292.5 accepted with a reviewed warning",
+      "022.5 has transparent interior hole rows (y=126)",
+      "045 has transparent interior hole rows (y=133)",
+      "180->202.5 diff is a local outlier (5923 pixels vs neighbor average 1380)",
+      "180->202.5 center shift is high (13.5px)",
+      "247.5->270 diff is a local outlier (2360 pixels vs neighbor average 882)",
+      "247.5->270 center shift is high (8.5px)",
+      "337.5->000 diff is a local outlier (5346 pixels vs neighbor average 1476)",
+      "337.5->000 center shift is high (25.2px)"
+    ],
+    "jump": {
+      "idle_baseline": 200,
+      "jump_baselines": [
+        201,
+        186,
+        171,
+        188,
+        202
+      ],
+      "airborne_lift_pixels": 31,
+      "landing_delta_pixels": 2
+    },
+    "look_registration": {
+      "neutral_center_x": 94.5,
+      "look_centers_x": [
+        114.0,
+        115.0,
+        116.5,
+        116.5,
+        119.0,
+        116.0,
+        110.0,
+        108.5,
+        108.5,
+        95.0,
+        94.5,
+        93.5,
+        85.0,
+        85.0,
+        86.5,
+        89.0
+      ],
+      "look_widths": [
+        114,
+        116,
+        121,
+        121,
+        126,
+        120,
+        114,
+        113,
+        113,
+        108,
+        111,
+        113,
+        120,
+        120,
+        117,
+        114
+      ],
+      "maximum_center_drift_pixels": 24.5,
+      "maximum_width_ratio": 1.1666666666666667
+    }
+  },
+  "provenance": {
+    "artwork": "Image-generated character artwork, transparently extracted and registered into the approved atlas.",
+    "registered_rows": "Lossless full-width row crops of this exact final atlas; no redraw or per-frame recentering.",
+    "canonical_design": "Accepted reference design; not a replacement runtime frame.",
+    "procedural_component_generates_atlas": false
+  },
+  "visual_review": {
+    "status": "pass_with_reviewed_warnings",
+    "no_frontal_views": true,
+    "standard_states_preserved": 9,
+    "standard_frames_preserved": 57,
+    "accepted_direction_switches": [
+      "180 -> 202.5 degrees",
+      "337.5 -> 0 degrees"
+    ],
+    "known_variations": [
+      "Restrained upper-diagonal changes; some neighbor pixel differences and center shifts remain above the local average.",
+      "Two intentional 2D side-profile switches preserve the no-frontal-view design."
+    ]
+  }
+}
